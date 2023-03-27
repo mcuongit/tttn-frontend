@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.ct-banner-icon {
+  @apply p-2 rounded-full bg-white shadow-md text-sky-600;
+}
