@@ -7,6 +7,7 @@ import {
     TextInput,
 } from "flowbite-react";
 import { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { deleteUser, getAllUsers } from "../../../api/userService";
 import CustomBreadcumb from "../../../components/common/CustomBreadcumb";
@@ -47,7 +48,7 @@ function UsersManage() {
     const handleDelete = (id) => {
         deleteUser(id)
             .then((res) => {
-                if (res.data.errCode === 0) {
+                if (res.data.statusCode === 0) {
                     setUsersList(usersList.filter((key) => key.id !== id));
                     setAlertContent({
                         color: "success",
@@ -57,7 +58,7 @@ function UsersManage() {
                 } else {
                     setAlertContent({
                         color: "failure",
-                        msg: res.data.messgae,
+                        msg: res.data.message,
                     });
                     setCheckDelete(true);
                 }
@@ -119,7 +120,7 @@ function UsersManage() {
                                         <div className="px-3 py-1 text-base font-medium leading-none text-center text-blue-800 bg-blue-200 rounded-full animate-pulse">
                                             <Spinner size="sm" />
                                             <span className="ml-2">
-                                                Loading...
+                                                Đang tải...
                                             </span>
                                         </div>
                                     </div>
@@ -127,6 +128,7 @@ function UsersManage() {
                             </tr>
                         ) : (
                             usersList &&
+                            usersList.length > 0 &&
                             usersList.map((item) => (
                                 <Table.Row
                                     key={item.id}

@@ -1,7 +1,26 @@
-import { Sidebar, TextInput } from "flowbite-react";
-import { Outlet, NavLink, Link } from "react-router-dom";
+import { Avatar, Dropdown, Sidebar, TextInput } from "flowbite-react";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Outlet, NavLink, Link, useNavigate } from "react-router-dom";
+import { path } from "../../../utils/constant";
+import { handleLogin } from "../slices/loginSlice";
 
 function LayoutAdmin() {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const selector = useSelector((state) => state.auth);
+    const [isSignedOut, setIsSignedOut] = useState(false);
+    useEffect(() => {
+        if (isSignedOut) {
+            navigate(path.LOGIN);
+        }
+    }, [isSignedOut]);
+
+    const handleSignOut = () => {
+        console.log(selector);
+        dispatch(handleLogin(false));
+        setIsSignedOut(true);
+    };
     return (
         <div>
             <div>
@@ -54,6 +73,35 @@ function LayoutAdmin() {
                                     sizing="md"
                                     placeholder="Search"
                                 />
+                            </div>
+                            <div className="grow flex justify-end">
+                                <Dropdown
+                                    label={
+                                        <Avatar
+                                            alt="User settings"
+                                            img="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+                                            rounded={true}
+                                        />
+                                    }
+                                    arrowIcon={false}
+                                    inline={true}
+                                >
+                                    <Dropdown.Header>
+                                        <span className="block text-sm">
+                                            Bonnie Green
+                                        </span>
+                                        <span className="block truncate text-sm font-medium">
+                                            name@flowbite.com
+                                        </span>
+                                    </Dropdown.Header>
+                                    <Dropdown.Item>Dashboard</Dropdown.Item>
+                                    <Dropdown.Item>Settings</Dropdown.Item>
+                                    <Dropdown.Item>Earnings</Dropdown.Item>
+                                    <Dropdown.Divider />
+                                    <Dropdown.Item onClick={handleSignOut}>
+                                        Sign out
+                                    </Dropdown.Item>
+                                </Dropdown>
                             </div>
                         </div>
                     </div>

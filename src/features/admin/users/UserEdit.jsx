@@ -5,11 +5,11 @@ import {
     Select,
     Spinner,
     TextInput,
+    Tooltip,
 } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import {
-    addNewUser,
     getAllcodeService,
     getOneUser,
     updateUserService,
@@ -57,14 +57,9 @@ function UserEdit() {
             });
     }, []);
 
-    // useEffect(() => {
-    //     console.log(user);
-    // }, [user]);
-
     // avatar preview
     const handleChangeImg = (e) => {
         const data = e.target.files;
-        console.log(data);
         const file = data[0];
         if (file) {
             setPreviewImg(file);
@@ -104,9 +99,7 @@ function UserEdit() {
         const arrInput = [...Object.keys(initState)];
         arrInput.splice(1, 1);
         arrInput.pop();
-        console.log(arrInput);
         for (let i = 0; i < arrInput.length; i++) {
-            console.log(arrInput[i]);
             if (!user[arrInput[i]]) {
                 setAlertContent({
                     color: "failure",
@@ -119,25 +112,27 @@ function UserEdit() {
         return true;
     };
 
+    const updateUser = () => {
+        updateUserService(id, user)
+            .then((res) => {
+                if (res.data.statusCode !== 0) {
+                    setAlertContent({
+                        color: "failure",
+                        msg: res.data.message,
+                    });
+                    setIsValid(false);
+                } else {
+                    navigate("/admin/users/manage");
+                }
+            })
+            .catch((e) => {
+                console.log(e);
+            });
+    };
+
     useEffect(() => {
         if (isAddedImg) {
-            console.log(user);
-            addNewUser(endpoint, user)
-                .then((res) => {
-                    console.log(res);
-                    if (res.data.statusCode !== 0) {
-                        setAlertContent({
-                            color: "failure",
-                            msg: res.data.message,
-                        });
-                        setIsValid(false);
-                    } else {
-                        navigate("/admin/users/manage");
-                    }
-                })
-                .catch((e) => {
-                    console.log(e);
-                });
+            updateUser();
             setIsAddedImg(false);
         }
     }, [isAddedImg]);
@@ -163,21 +158,7 @@ function UserEdit() {
                         console.log(e);
                     });
             } else {
-                updateUserService(id, user)
-                    .then((res) => {
-                        if (res.data.statusCode !== 0) {
-                            setAlertContent({
-                                color: "failure",
-                                msg: res.data.message,
-                            });
-                            setIsValid(false);
-                        } else {
-                            navigate("/admin/users/manage");
-                        }
-                    })
-                    .catch((e) => {
-                        console.log(e);
-                    });
+                updateUser();
             }
             setLoading(false);
         }
@@ -232,12 +213,16 @@ function UserEdit() {
                     >
                         {previewImg ? (
                             <img
-                                src={
-                                    previewImg
-                                        ? URL.createObjectURL(previewImg)
-                                        : ""
-                                }
+                                src={URL.createObjectURL(previewImg)}
                                 alt="avatar preview"
+                                className="max-w-full h-auto"
+                            />
+                        ) : user.image ? (
+                            <img
+                                src={`${
+                                    import.meta.env.VITE_BACKEND_URL
+                                }/users/avatar/${user.image}`}
+                                alt="avatar"
                                 className="max-w-full h-auto"
                             />
                         ) : (
@@ -267,18 +252,20 @@ function UserEdit() {
                         <div className="mb-2 block">
                             <Label htmlFor="password" value="Mật khẩu" />
                         </div>
-                        <TextInput
-                            id="password"
-                            type="password"
-                            required={true}
-                            disabled
-                            name="password"
-                            placeholder="Mật khẩu"
-                            className="cursor-not-allowed"
-                            onChange={(e) => {
-                                handleInputChange(e);
-                            }}
-                        />
+                        <Tooltip content="Không cho phép sửa mật khẩu">
+                            <TextInput
+                                id="password"
+                                type="password"
+                                required={true}
+                                disabled
+                                name="password"
+                                placeholder="Mật khẩu"
+                                className="cursor-not-allowed w-full"
+                                onChange={(e) => {
+                                    handleInputChange(e);
+                                }}
+                            />
+                        </Tooltip>
                     </div>
                     <div className="flex w-full md:flex-row flex-col gap-x-3">
                         <div className="basis-1/2">

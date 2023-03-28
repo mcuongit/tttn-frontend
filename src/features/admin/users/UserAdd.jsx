@@ -7,6 +7,7 @@ import {
     TextInput,
 } from "flowbite-react";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
     addNewUser,
     getAllcodeService,
@@ -90,7 +91,7 @@ function UserAdd() {
 
     // validate input not empty
     const validateInput = () => {
-        const arrInput = [...Object.keys(user)];
+        const arrInput = [...Object.keys(initState)];
         arrInput.pop();
         for (let i = 0; i < arrInput.length; i++) {
             if (!user[arrInput[i]]) {
@@ -115,7 +116,6 @@ function UserAdd() {
     const createUser = () => {
         addNewUser(endpoint, user)
             .then((res) => {
-                console.log(res);
                 if (res.data.statusCode !== 0) {
                     setAlertContent({
                         color: "failure",
@@ -127,17 +127,18 @@ function UserAdd() {
                         msg: "Thêm người dùng thành công",
                     });
                 }
+                setUser({
+                    ...initState,
+                    gender: gender && gender.length > 0 ? gender[0].key : "",
+                    positionId:
+                        position && position.length > 0 ? position[0].key : "",
+                    roleId: role && role.length > 0 ? role[0].key : "",
+                });
                 setIsValid(false);
             })
             .catch((e) => {
                 console.log(e);
             });
-        setUser({
-            ...initState,
-            gender: gender && gender.length > 0 ? gender[0].key : "",
-            positionId: position && position.length > 0 ? position[0].key : "",
-            roleId: role && role.length > 0 ? role[0].key : "",
-        });
     };
 
     // save user

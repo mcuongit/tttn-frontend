@@ -1,15 +1,8 @@
 import axios from "axios";
+import callApi from "./_configApi";
 
-const API_URL = "http://localhost:5000/users";
-
-const callApi = (endpoint, method = "GET", data) => {
-    return axios({
-        method: method,
-        url: `${API_URL}/${endpoint}`,
-        data: data,
-    }).catch((e) => {
-        console.log(e);
-    });
+const userApi = (endpoint, method = "GET", data) => {
+    return callApi("users", endpoint, method, data);
 };
 
 const handleLoginApi = (email, password) => {
@@ -17,31 +10,31 @@ const handleLoginApi = (email, password) => {
 };
 
 const getAllUsers = (endpoint) => {
-    return callApi(endpoint);
+    return userApi(endpoint);
 };
 
 const getOneUser = (endpoint) => {
-    return callApi(endpoint);
+    return userApi(endpoint);
 };
 
 const addNewUser = (endpoint, data) => {
-    return callApi(endpoint, "POST", data);
+    return userApi(endpoint, "POST", data);
 };
 
 const deleteUser = (endpoint) => {
-    return callApi(endpoint, "DELETE");
+    return userApi(endpoint, "DELETE");
 };
 
 const updateUserService = (endpoint, data) => {
-    return callApi(endpoint, "PATCH", data);
+    return userApi(endpoint, "PATCH", data);
 };
 
 const updateUserImgService = (endpoint, data) => {
-    return callApi(endpoint, "PUT", data);
+    return userApi(endpoint, "PUT", data);
 };
 
 const uploadImg = (endpoint, data) => {
-    return callApi(endpoint, "POST", data);
+    return userApi(endpoint, "POST", data);
 };
 
 const getAllcodeService = (data) => {
