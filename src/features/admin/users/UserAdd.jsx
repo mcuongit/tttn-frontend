@@ -42,6 +42,7 @@ function UserAdd() {
         image: "",
     };
     const [user, setUser] = useState(initState);
+    const navigate = useNavigate();
     // avatar preview
     const handleChangeImg = (e) => {
         const data = e.target.files;
@@ -126,14 +127,17 @@ function UserAdd() {
                         color: "success",
                         msg: "Thêm người dùng thành công",
                     });
+                    setUser({
+                        ...initState,
+                        gender:
+                            gender && gender.length > 0 ? gender[0].key : "",
+                        positionId:
+                            position && position.length > 0
+                                ? position[0].key
+                                : "",
+                        roleId: role && role.length > 0 ? role[0].key : "",
+                    });
                 }
-                setUser({
-                    ...initState,
-                    gender: gender && gender.length > 0 ? gender[0].key : "",
-                    positionId:
-                        position && position.length > 0 ? position[0].key : "",
-                    roleId: role && role.length > 0 ? role[0].key : "",
-                });
                 setIsValid(false);
             })
             .catch((e) => {
@@ -183,9 +187,20 @@ function UserAdd() {
             <div className="mb-3">
                 <CustomBreadcumb crumbs={crumbs} />
             </div>
-            <h1 className="uppercase text-2xl font-semibold mb-5">
-                thêm mới người dùng
-            </h1>
+            <div className="flex justify-between">
+                <h1 className="uppercase text-2xl font-semibold mb-5">
+                    thêm mới người dùng
+                </h1>
+                <Button
+                    size={"xs"}
+                    onClick={() => {
+                        navigate(-1);
+                    }}
+                >
+                    <ArrowLeftIcon />
+                    <span>Quay lại</span>
+                </Button>
+            </div>
             {!isValid && (
                 <div className="my-3">
                     <Alert
@@ -411,5 +426,22 @@ function UserAdd() {
         </form>
     );
 }
+
+const ArrowLeftIcon = () => {
+    return (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="currentColor"
+            className="w-6 h-6"
+        >
+            <path
+                fillRule="evenodd"
+                d="M20.25 12a.75.75 0 01-.75.75H6.31l5.47 5.47a.75.75 0 11-1.06 1.06l-6.75-6.75a.75.75 0 010-1.06l6.75-6.75a.75.75 0 111.06 1.06l-5.47 5.47H19.5a.75.75 0 01.75.75z"
+                clipRule="evenodd"
+            />
+        </svg>
+    );
+};
 
 export default UserAdd;

@@ -2,15 +2,21 @@ import "./App.css";
 import { path } from "./utils/constant";
 import LayoutSite from "./container/layout/LayoutSite";
 import HomePage from "./container/pages/HomePage";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import {
+    BrowserRouter,
+    Navigate,
+    redirect,
+    Route,
+    Routes,
+} from "react-router-dom";
 import NotFound from "./components/common/NotFound";
 import RouteAdmin from "./features/admin/RouteAdmin";
 import Login from "./container/pages/Login";
 import { Suspense } from "react";
+import { useSelector } from "react-redux";
 
 function App() {
-    const auth = JSON.parse(localStorage.getItem("persist:root"));
-    const isLogin = auth.auth ? JSON.parse(auth.auth).isLogin : false;
+    const selector = useSelector((state) => state.auth.isLogin);
     return (
         <Suspense fallback={null}>
             <BrowserRouter>
@@ -21,10 +27,10 @@ function App() {
                     <Route
                         path={`${path.ADMIN}/*`}
                         element={
-                            isLogin ? (
+                            selector ? (
                                 <RouteAdmin />
                             ) : (
-                                <Navigate to={path.LOGIN} />
+                                <Navigate to={path.LOGIN} replace={true} />
                             )
                         }
                     />

@@ -8,7 +8,8 @@ import { handleLogin } from "../slices/loginSlice";
 function LayoutAdmin() {
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const selector = useSelector((state) => state.auth);
+    const userSignedIn = useSelector((state) => state.userAdmin);
+    const { userData } = userSignedIn;
     const [isSignedOut, setIsSignedOut] = useState(false);
     useEffect(() => {
         if (isSignedOut) {
@@ -17,7 +18,6 @@ function LayoutAdmin() {
     }, [isSignedOut]);
 
     const handleSignOut = () => {
-        console.log(selector);
         dispatch(handleLogin(false));
         setIsSignedOut(true);
     };
@@ -56,11 +56,21 @@ function LayoutAdmin() {
                                     to="http://localhost:5173/admin"
                                     className="flex ml-2 md:mr-24"
                                 >
-                                    <img
-                                        src="https://flowbite.com/docs/images/logo.svg"
-                                        className="h-8 mr-3"
-                                        alt="FlowBite Logo"
-                                    />
+                                    <div className="mr-3">
+                                        <svg
+                                            xmlns="http://www.w3.org/2000/svg"
+                                            viewBox="-40 -40 80 80"
+                                            className="h-8 w-8"
+                                        >
+                                            <circle r="39" />
+                                            <path
+                                                fill="#fff"
+                                                d="M0,38a38,38 0 0 1 0,-76a19,19 0 0 1 0,38a19,19 0 0 0 0,38"
+                                            />
+                                            <circle r="5" cy="19" fill="#fff" />
+                                            <circle r="5" cy="-19" />
+                                        </svg>
+                                    </div>
                                     <span className="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">
                                         Quản trị
                                     </span>
@@ -74,35 +84,52 @@ function LayoutAdmin() {
                                     placeholder="Search"
                                 />
                             </div>
-                            <div className="grow flex justify-end">
-                                <Dropdown
-                                    label={
-                                        <Avatar
-                                            alt="User settings"
-                                            img="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-                                            rounded={true}
-                                        />
-                                    }
-                                    arrowIcon={false}
-                                    inline={true}
-                                >
-                                    <Dropdown.Header>
-                                        <span className="block text-sm">
-                                            Bonnie Green
-                                        </span>
-                                        <span className="block truncate text-sm font-medium">
-                                            name@flowbite.com
-                                        </span>
-                                    </Dropdown.Header>
-                                    <Dropdown.Item>Dashboard</Dropdown.Item>
-                                    <Dropdown.Item>Settings</Dropdown.Item>
-                                    <Dropdown.Item>Earnings</Dropdown.Item>
-                                    <Dropdown.Divider />
-                                    <Dropdown.Item onClick={handleSignOut}>
-                                        Sign out
-                                    </Dropdown.Item>
-                                </Dropdown>
-                            </div>
+                            {userSignedIn && userData && (
+                                <div className="grow flex justify-end">
+                                    <Dropdown
+                                        label={
+                                            <Avatar
+                                                alt="User settings"
+                                                img={
+                                                    userData.image
+                                                        ? `${
+                                                              import.meta.env
+                                                                  .VITE_BACKEND_URL
+                                                          }/users/avatar/${
+                                                              userData.image
+                                                          }`
+                                                        : ""
+                                                }
+                                                rounded={true}
+                                            />
+                                        }
+                                        arrowIcon={false}
+                                        inline={true}
+                                    >
+                                        <Dropdown.Header>
+                                            <span className="block text-sm">
+                                                {userData.firstName +
+                                                    " " +
+                                                    userData.lastName}
+                                            </span>
+                                            <span className="block truncate text-sm font-medium">
+                                                {userData.email}
+                                            </span>
+                                        </Dropdown.Header>
+                                        <Dropdown.Item>
+                                            <Link to={path.ADMIN}>
+                                                Tổng quan
+                                            </Link>
+                                        </Dropdown.Item>
+                                        <Dropdown.Item>Settings</Dropdown.Item>
+                                        <Dropdown.Item>Earnings</Dropdown.Item>
+                                        <Dropdown.Divider />
+                                        <Dropdown.Item onClick={handleSignOut}>
+                                            Sign out
+                                        </Dropdown.Item>
+                                    </Dropdown>
+                                </div>
+                            )}
                         </div>
                     </div>
                 </nav>
@@ -138,7 +165,7 @@ function LayoutAdmin() {
                                         to="/admin"
                                         end
                                     >
-                                        Dashboard
+                                        Tổng quan
                                     </Sidebar.Item>
                                     <Sidebar.Item
                                         as={NavLink}

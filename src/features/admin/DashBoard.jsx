@@ -1,11 +1,16 @@
 import { Button } from "flowbite-react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { redirect } from "react-router-dom";
+import { path } from "../../utils/constant";
 import { handleLogin } from "./slices/loginSlice";
+import { saveUser } from "./slices/userSlice";
 
 function DashBoard() {
+    const dispatch = useDispatch();
     const handleST = () => {
-        dispatch(handleLogin(true));
-        console.log("dispatch:", login);
+        dispatch(handleLogin(false));
+        dispatch(saveUser({}));
+        return redirect(path.ADMIN);
     };
     return (
         <div>

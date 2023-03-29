@@ -1,9 +1,10 @@
 import { Alert, Button, Checkbox, Label, TextInput } from "flowbite-react";
 import { useEffect, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import { handleLoginService } from "../../api/loginService";
 import { handleLogin } from "../../features/admin/slices/loginSlice";
+import { saveUser } from "../../features/admin/slices/userSlice";
 import { path } from "../../utils/constant";
 // import
 
@@ -19,7 +20,7 @@ function Login() {
         res: false,
         msg: "",
     });
-    const [isAuth, setIsAuth] = useState(false);
+    const selector = useSelector((state) => state.auth.isLogin);
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -57,7 +58,7 @@ function Login() {
                     });
                 } else {
                     dispatch(handleLogin(true));
-                    setIsAuth(true);
+                    dispatch(saveUser(res.data.user));
                 }
             })
             .catch((e) => {
@@ -66,30 +67,35 @@ function Login() {
     };
 
     useEffect(() => {
-        if (isAuth) {
-            console.log(isAuth);
-            navigate(path.ADMIN);
-        }
-    }, [isAuth]);
+        if (selector) navigate(path.ADMIN);
+    }, [selector]);
 
     return (
         <>
             <main className="bg-gray-50">
                 <div className="flex flex-col items-center justify-center px-6 pt-8 mx-auto md:h-screen pt:mt-0">
-                    <a
-                        href="https://flowbite-admin-dashboard.vercel.app/"
-                        className="flex items-center justify-center mb-8 text-2xl font-semibold"
+                    <Link
+                        to={path.ADMIN}
+                        className="flex items-center justify-center mb-8 text-3xl font-semibold"
                     >
-                        <img
-                            src="https://flowbite-admin-dashboard.vercel.app/images/logo.svg"
-                            className="mr-4 h-11"
-                            alt="FlowBite Logo"
-                        />
-                        <span>Flowbite</span>
-                    </a>
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            viewBox="-40 -40 80 80"
+                            className="h-11 w-11 mr-4"
+                        >
+                            <circle r="39" />
+                            <path
+                                fill="#fff"
+                                d="M0,38a38,38 0 0 1 0,-76a19,19 0 0 1 0,38a19,19 0 0 0 0,38"
+                            />
+                            <circle r="5" cy="19" fill="#fff" />
+                            <circle r="5" cy="-19" />
+                        </svg>
+                        <span>Quản trị</span>
+                    </Link>
                     {/* Card */}
-                    <div className="w-full max-w-xl p-6 space-y-8 sm:p-8 bg-white rounded-lg shadow dark:bg-gray-800">
-                        <h2 className="text-2xl font-bold text-gray-900 dark:text-white">
+                    <div className="w-full max-w-xl p-6 space-y-8 sm:p-8 bg-white rounded-lg shadow">
+                        <h2 className="text-2xl font-bold text-gray-900">
                             Đăng nhập vào nền tảng
                         </h2>
                         <form

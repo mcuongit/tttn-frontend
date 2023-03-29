@@ -5,8 +5,8 @@ const userApi = (endpoint, method = "GET", data) => {
     return callApi("users", endpoint, method, data);
 };
 
-const handleLoginApi = (email, password) => {
-    return axios.post("login", { email: email, password: password });
+const deleteMultipleRecord = (endpoint, data) => {
+    return userApi(endpoint, "DELETE", data);
 };
 
 const getAllUsers = (endpoint) => {
@@ -42,7 +42,6 @@ const getAllcodeService = (data) => {
 };
 
 export {
-    handleLoginApi,
     getAllUsers,
     addNewUser,
     deleteUser,
@@ -51,4 +50,5 @@ export {
     uploadImg,
     updateUserImgService,
     getOneUser,
+    deleteMultipleRecord,
 };
