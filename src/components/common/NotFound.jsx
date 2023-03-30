@@ -1,12 +1,17 @@
 import { Button } from "flowbite-react";
+import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { path } from "../../utils/constant";
+import { docTitle, path } from "../../utils/constant";
 
 function NotFound() {
     const navigate = useNavigate();
     const handleOnClick = () => {
         navigate(-1);
     };
+    useEffect(() => {
+        document.title = docTitle.NOTFOUND;
+    }, []);
+
     return (
         <div className="flex flex-col justify-center items-center h-screen gap-3 bg-white">
             <h1 className="font-bold text-6xl">404</h1>

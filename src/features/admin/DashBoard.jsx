@@ -1,7 +1,8 @@
 import { Button } from "flowbite-react";
+import { useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { redirect } from "react-router-dom";
-import { path } from "../../utils/constant";
+import { docTitle, path } from "../../utils/constant";
 import { handleLogin } from "./slices/loginSlice";
 import { saveUser } from "./slices/userSlice";
 
@@ -12,6 +13,11 @@ function DashBoard() {
         dispatch(saveUser({}));
         return redirect(path.ADMIN);
     };
+    useEffect(() => {
+        const { dashboard } = docTitle.ADMIN;
+        document.title = dashboard;
+    }, []);
+
     return (
         <div>
             <p>DashBoard</p>

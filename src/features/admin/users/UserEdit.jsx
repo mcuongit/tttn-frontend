@@ -16,6 +16,7 @@ import {
     uploadImg,
 } from "../../../api/userService";
 import CustomBreadcumb from "../../../components/common/CustomBreadcumb";
+import { docTitle } from "../../../utils/constant";
 
 function UserEdit() {
     const endpoint = "";
@@ -61,13 +62,26 @@ function UserEdit() {
     const handleChangeImg = (e) => {
         const data = e.target.files;
         const file = data[0];
-        if (file) {
-            setPreviewImg(file);
+        if (!file) return;
+        switch (file.type) {
+            case "image/png":
+            case "image/jpeg":
+                setPreviewImg(file);
+                break;
+            default:
+                setAlertContent({
+                    color: "failure",
+                    msg: "Định dạng tập tin không hợp lệ",
+                });
+                setIsValid(false);
+                break;
         }
     };
 
     // call api before run
     useEffect(() => {
+        const { edit_user } = docTitle.ADMIN;
+        document.title = edit_user;
         getAllcodeService("GENDER")
             .then((res) => {
                 setGender(res.data.data);

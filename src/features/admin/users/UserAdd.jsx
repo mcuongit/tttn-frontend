@@ -14,6 +14,7 @@ import {
     uploadImg,
 } from "../../../api/userService";
 import CustomBreadcumb from "../../../components/common/CustomBreadcumb";
+import { docTitle } from "../../../utils/constant";
 
 function UserAdd() {
     const endpoint = "";
@@ -47,13 +48,26 @@ function UserAdd() {
     const handleChangeImg = (e) => {
         const data = e.target.files;
         const file = data[0];
-        if (file) {
-            setPreviewImg(file);
+        if (!file) return;
+        switch (file.type) {
+            case "image/png":
+            case "image/jpeg":
+                setPreviewImg(file);
+                break;
+            default:
+                setAlertContent({
+                    color: "failure",
+                    msg: "Định dạng tập tin không hợp lệ",
+                });
+                setIsValid(false);
+                break;
         }
     };
 
     // call api before run
     useEffect(() => {
+        const { add_user } = docTitle.ADMIN;
+        document.title = add_user;
         getAllcodeService("GENDER")
             .then((res) => {
                 setGender(res.data.data);
@@ -150,25 +164,28 @@ function UserAdd() {
         e.preventDefault();
         const valid = validateInput();
         if (valid) {
-            setLoading(true);
-            if (previewImg) {
-                const formData = new FormData();
-                formData.append("image", previewImg);
-                uploadImg("upload", formData)
-                    .then((response) => {
-                        setUser({
-                            ...user,
-                            image: response.data.name,
+            return new Promise((reject) => {
+                setLoading(true);
+                if (previewImg) {
+                    const formData = new FormData();
+                    formData.append("image", previewImg);
+                    uploadImg("upload", formData)
+                        .then((response) => {
+                            setUser({
+                                ...user,
+                                image: response.data.name,
+                            });
+                            setIsAddedImg(true);
+                        })
+                        .catch((e) => {
+                            console.log(e);
                         });
-                        setIsAddedImg(true);
-                    })
-                    .catch((e) => {
-                        console.log(e);
-                    });
-            } else {
-                createUser();
-            }
-            setLoading(false);
+                } else {
+                    createUser();
+                }
+                setLoading(false);
+                reject();
+            });
         }
     };
     // breadcrumbs
@@ -222,6 +239,7 @@ function UserAdd() {
                         type="file"
                         name="image"
                         id="avatar"
+                        accept=".png, .jpeg, .jpg"
                         onChange={(e) => {
                             handleChangeImg(e);
                         }}

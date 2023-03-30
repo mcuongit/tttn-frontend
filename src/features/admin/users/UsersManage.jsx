@@ -14,6 +14,7 @@ import {
     getAllUsers,
 } from "../../../api/userService";
 import CustomBreadcumb from "../../../components/common/CustomBreadcumb";
+import { docTitle } from "../../../utils/constant";
 
 function UsersManage() {
     const endpoint = "";
@@ -21,16 +22,6 @@ function UsersManage() {
         { name: "Trang chủ", link: "/admin" },
         { name: "Tài khoản", link: undefined },
     ];
-    const AddIcon = (props) => (
-        <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            className={props.className ? props.className : "h-5 w-5"}
-        >
-            <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
-        </svg>
-    );
     const [usersList, setUsersList] = useState([]);
     const [checkDelete, setCheckDelete] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -41,6 +32,8 @@ function UsersManage() {
     });
     // call api
     useEffect(() => {
+        const { users } = docTitle.ADMIN;
+        document.title = users;
         setLoading(true);
         getAllUsers(endpoint).then((res) => {
             setUsersList(res.data);
@@ -88,10 +81,12 @@ function UsersManage() {
         if (checkList.length === 0) {
             alert("Vui lòng chọn ít nhất 1 sản phẩm để xoá");
             return;
+        } else if (checkList.length === usersList.length) {
+            alert("Cần để lại tối thiểu 1 tài khoản");
+            return;
         }
         deleteMultipleRecord("del-mul", checkList)
             .then((res) => {
-                console.log(res);
                 if (res && res.data && res.data.affected) {
                     const { affected } = res.data;
                     if (affected <= 0) return;
@@ -99,6 +94,11 @@ function UsersManage() {
                         color: "success",
                         msg: `Xoá thành công ${affected} tài khoản.`,
                     });
+                    let a = [...usersList];
+                    checkList.forEach((element) => {
+                        a = a.filter((item) => item.id !== element);
+                    });
+                    setUsersList(a);
                     setCheckDelete(true);
                 }
             })
@@ -242,5 +242,16 @@ const TrashIcon = () => {
         </svg>
     );
 };
+
+const AddIcon = (props) => (
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+        className={props.className ? props.className : "h-5 w-5"}
+    >
+        <path d="M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z" />
+    </svg>
+);
 
 export default UsersManage;
