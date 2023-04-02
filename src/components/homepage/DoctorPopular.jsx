@@ -1,8 +1,9 @@
-import { Avatar, Card } from "flowbite-react";
+import { Avatar, Button, Card } from "flowbite-react";
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import Slider from "react-slick";
 import { getTopDoctor } from "../../api/homeService";
+import { Link } from "react-router-dom";
 
 function DoctorPopular() {
     const color = ["gray", "light", "purple", "success", "pink", "gray"];
@@ -11,7 +12,6 @@ function DoctorPopular() {
     useEffect(() => {
         getTopDoctor(`get-top-doctor/${limit}`)
             .then((res) => {
-                console.log(res);
                 setDoctorsList(res.data);
             })
             .catch((e) => {
@@ -38,6 +38,7 @@ function DoctorPopular() {
                 </h1>
                 <Slider {...settings}>
                     {doctorsList &&
+                        doctorsList.length > 0 &&
                         doctorsList.map((item) => (
                             <div key={item.id}>
                                 <div className="max-w-sm px-2">
@@ -52,7 +53,7 @@ function DoctorPopular() {
                                                           }/users/avatar/${
                                                               item.image
                                                           }`
-                                                        : "https://flowbite.com/docs/images/people/profile-picture-3.jpg"
+                                                        : ""
                                                 }
                                                 rounded={true}
                                                 bordered={true}
@@ -74,12 +75,13 @@ function DoctorPopular() {
                                                 {item.positionData.valueVi}
                                             </span>
                                             <div className="mt-4 flex space-x-3 lg:mt-6">
-                                                <a
-                                                    href="#"
-                                                    className="inline-flex items-center rounded-lg bg-blue-700 py-2 px-4 text-center text-sm font-medium text-white hover:bg-blue-800 focus:outline-none focus:ring-4 focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                                                >
-                                                    Xem thông tin
-                                                </a>
+                                                <Button size="sm">
+                                                    <Link
+                                                        to={`/doctor/${item.id}`}
+                                                    >
+                                                        Xem thông tin
+                                                    </Link>
+                                                </Button>
                                             </div>
                                         </div>
                                     </Card>

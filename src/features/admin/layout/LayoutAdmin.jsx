@@ -235,6 +235,12 @@ function LayoutAdmin() {
                                         >
                                             Thêm tài khoản
                                         </Sidebar.Item>
+                                        <Sidebar.Item
+                                            as={NavLink}
+                                            to="users/doctors"
+                                        >
+                                            Quản lý bác sĩ
+                                        </Sidebar.Item>
                                     </Sidebar.Collapse>
                                     <Sidebar.Item
                                         as={NavLink}

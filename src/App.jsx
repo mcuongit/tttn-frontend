@@ -14,6 +14,7 @@ import RouteAdmin from "./features/admin/RouteAdmin";
 import Login from "./container/pages/Login";
 import { Suspense } from "react";
 import { useSelector } from "react-redux";
+import DetailDoctor from "./container/patient/doctor/DetailDoctor";
 
 function App() {
     const selector = useSelector((state) => state.auth.isLogin);
@@ -21,8 +22,12 @@ function App() {
         <Suspense fallback={null}>
             <BrowserRouter>
                 <Routes>
-                    <Route path="/" element={<LayoutSite />}>
+                    <Route path={path.HOME} element={<LayoutSite />}>
                         <Route index element={<HomePage />} />
+                        <Route
+                            path={path.DETAIL_DOCTOR}
+                            element={<DetailDoctor />}
+                        />
                     </Route>
                     <Route
                         path={`${path.ADMIN}/*`}

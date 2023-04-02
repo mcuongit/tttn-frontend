@@ -42,7 +42,6 @@ function UserEdit() {
         gender: "",
         positionId: "",
         roleId: "",
-        image: "",
     };
     const [user, setUser] = useState(initState);
     const { id } = useParams();
