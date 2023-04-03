@@ -26,7 +26,8 @@
     "react-select": "^5.7.2",
     "react-slick": "^0.29.0",
     "redux-persist": "^6.0.0",
-    "slick-carousel": "^1.8.1"
+    "slick-carousel": "^1.8.1",
+    "tailwind-datepicker-react": "^1.2.3"
   },
   "devDependencies": {
     "@tailwindcss/typography": "^0.5.9",

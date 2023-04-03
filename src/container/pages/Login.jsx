@@ -51,7 +51,7 @@ function Login() {
         }
         handleLoginService("", user)
             .then((res) => {
-                if (res.data.statusCode !== 0) {
+                if (res && res.data.statusCode !== 0) {
                     setResponse({
                         res: true,
                         msg: res.data.message,

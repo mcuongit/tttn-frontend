@@ -32,9 +32,17 @@ export const docTitle = {
         users: "Admin | Quản lý người dùng",
         add_user: "Admin | Thêm người dùng",
         edit_user: "Admin | Sửa người dùng",
+        schedule: "Admin | Lịch khám",
     },
     USER: {
         home: "Trang chủ",
+        doctor_info: "Thông tin bác sĩ",
     },
     NOTFOUND: "Không tìm thấy trang",
+};
+
+export const USER_ROLE = {
+    ADMIN: "R1",
+    DOCTOR: "R2",
+    PATIENT: "R3",
 };

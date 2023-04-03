@@ -6,7 +6,14 @@ import "react-markdown-editor-lite/lib/index.css";
 import Select from "react-select";
 import CustomBreadcumb from "../../../components/common/CustomBreadcumb";
 import { useEffect } from "react";
-import { getAllDoctor, saveDoctorInfo } from "../../../api/userService";
+import {
+    getAllDoctor,
+    getDetailDoctor,
+    getMarkdown,
+    saveDoctorInfo,
+    updateMarkdown,
+} from "../../../api/userService";
+import axios from "axios";
 
 function MagangeDoctor() {
     const [contentMarkdown, setContentMarkdown] = useState("");
@@ -53,6 +60,24 @@ function MagangeDoctor() {
     }
 
     const handleChange = (selectedOption) => {
+        const { value } = selectedOption;
+        getMarkdown(value)
+            .then((res) => {
+                if (res && res.data && res.data.data) {
+                    const { contentHTML, contentMarkdown, description } =
+                        res.data.data;
+                    setContentHTML(contentHTML);
+                    setContentMarkdown(contentMarkdown),
+                        setDescription(description);
+                } else {
+                    setContentHTML("");
+                    setContentMarkdown("");
+                    setDescription("");
+                }
+            })
+            .catch((e) => {
+                console.error(e);
+            });
         setSelectedDoctor(selectedOption);
     };
 
@@ -76,25 +101,51 @@ function MagangeDoctor() {
                 return;
             }
         }
-        saveDoctorInfo("save-doctor-info", s)
-            .then((res) => {
-                console.log(res);
-                if (res.data.statusCode !== 0) {
-                    setIsSaved({
-                        ...isSaved,
-                        isSaved: false,
-                    });
-                    return;
+        getMarkdown(s.doctorId).then((res) => {
+            if (res && res.data) {
+                const { data } = res.data;
+                if (!data) {
+                    saveDoctorInfo("save-doctor-info", s)
+                        .then((res) => {
+                            if (res.data.statusCode !== 0) {
+                                setIsSaved({
+                                    ...isSaved,
+                                    isSaved: false,
+                                });
+                                return;
+                            }
+                            setIsSaved({
+                                isSaved: true,
+                                message: "Thêm thành công",
+                                color: "success",
+                            });
+                        })
+                        .catch((e) => {
+                            console.error(e);
+                        });
+                } else {
+                    updateMarkdown(data.id, s);
+                    console
+                        .log(res)
+                        .then((res) => {
+                            if (
+                                res &&
+                                res.data &&
+                                res.data.data &&
+                                res.data.data.affected > 0
+                            )
+                                setIsSaved({
+                                    isSaved: true,
+                                    message: "Cập nhật thành công",
+                                    color: "success",
+                                });
+                        })
+                        .catch((e) => {
+                            console.error(e);
+                        });
                 }
-                setIsSaved({
-                    isSaved: true,
-                    message: "Thêm thành công",
-                    color: "success",
-                });
-            })
-            .catch((e) => {
-                console.error(e);
-            });
+            }
+        });
     };
 
     const crumbs = [
@@ -122,7 +173,7 @@ function MagangeDoctor() {
                             return setIsSaved({ ...isSaved, isSaved: false });
                         }}
                     >
-                        <span>Thêm thành công</span>
+                        <span>{isSaved.message}</span>
                     </Alert>
                 </div>
             )}
@@ -154,6 +205,7 @@ function MagangeDoctor() {
             <MdEditor
                 style={{ height: "500px", marginTop: 8 }}
                 renderHTML={(text) => mdParser.render(text)}
+                value={contentMarkdown}
                 onChange={handleEditorChange}
             />
         </div>

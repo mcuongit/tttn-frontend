@@ -53,6 +53,14 @@ const getDetailDoctor = (endpoint) => {
     return callApi("doctor", endpoint, "GET");
 };
 
+const getMarkdown = (endpoint) => {
+    return callApi("markdown", endpoint, "GET");
+};
+
+const updateMarkdown = (endpoint, data) => {
+    return callApi("markdown", endpoint, "PATCH", data);
+};
+
 export {
     getAllUsers,
     addNewUser,
@@ -66,4 +74,6 @@ export {
     getAllDoctor,
     saveDoctorInfo,
     getDetailDoctor,
+    getMarkdown,
+    updateMarkdown,
 };

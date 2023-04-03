@@ -1,5 +1,5 @@
 import { Footer } from "flowbite-react";
-import React from "react";
+import yinyang from "../../assets/yinyang.svg";
 import {
     BsFacebook,
     BsGithub,
@@ -14,10 +14,12 @@ function Footers() {
                 <div className="w-full">
                     <div className="grid w-full justify-between sm:flex sm:justify-between md:flex md:grid-cols-1">
                         <div className="flex gap-x-3">
-                            <YinYangIcon />
-                            <span className="whitespace-nowrap text-2xl font-semibold text-gray-800">
-                                BookingCare
-                            </span>
+                            <Footer.Brand
+                                href="/"
+                                src={yinyang}
+                                alt="Flowbite Logo"
+                                name="Flowbite"
+                            />
                         </div>
                         <div className="grid grid-cols-2 gap-8 sm:mt-4 sm:grid-cols-3 sm:gap-6">
                             <div>
@@ -67,23 +69,5 @@ function Footers() {
         </div>
     );
 }
-
-const YinYangIcon = () => {
-    return (
-        <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="-40 -40 80 80"
-            className="h-8 w-8"
-        >
-            <circle r="39" />
-            <path
-                fill="#fff"
-                d="M0,38a38,38 0 0 1 0,-76a19,19 0 0 1 0,38a19,19 0 0 0 0,38"
-            />
-            <circle r="5" cy="19" fill="#fff" />
-            <circle r="5" cy="-19" />
-        </svg>
-    );
-};
 
 export default Footers;

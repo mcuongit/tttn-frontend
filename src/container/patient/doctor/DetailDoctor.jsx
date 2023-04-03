@@ -5,6 +5,8 @@ import { Avatar } from "flowbite-react";
 import { useEffect } from "react";
 import { getAllDoctor } from "../../../api/userService";
 import { useState } from "react";
+import { docTitle } from "../../../utils/constant";
+import DoctorSchedule from "./DoctorSchedule";
 
 function DetailDoctor() {
     const { id } = useParams();
@@ -15,6 +17,7 @@ function DetailDoctor() {
         { name: "Thông tin bác sĩ", link: undefined },
     ];
     useEffect(() => {
+        document.title = docTitle.USER.doctor_info;
         getAllDoctor(`get-doctor-detail/${id}`)
             .then((res) => {
                 setDoctorDetail(res.data.data);
@@ -27,13 +30,13 @@ function DetailDoctor() {
     return (
         <>
             <Header />
-            <section className="max-w-screen-xl mx-auto">
-                <div className="mb-3">
+            <section>
+                <div className="mb-3 max-w-screen-xl mx-auto">
                     <CustomBreadcumb crumbs={crumbs} />
                 </div>
                 {doctorDetail ? (
                     <div className="">
-                        <div className="mb-3 flex justify-start py-5">
+                        <div className="mb-3 flex justify-start py-5 max-w-screen-xl mx-auto">
                             <div className="basis-3/12">
                                 <Avatar
                                     img={
@@ -61,21 +64,32 @@ function DetailDoctor() {
                                         </span>
                                     )}
                                 {!doctorDetail.markdown && (
-                                    <span>Không tìm thấy chi tiết bác sĩ</span>
+                                    <span className="text-red-600 text-center">
+                                        Không tìm thấy chi tiết bác sĩ
+                                    </span>
                                 )}
                             </div>
                         </div>
                         <hr />
-                        <div className="py-3">
+                        <div className="min-h-[200px] py-3 max-w-screen-xl mx-auto flex">
+                            <div className="basis-1/2">
+                                <DoctorSchedule />
+                            </div>
+                            <div className="basis-1/2"></div>
+                        </div>
+                        <hr />
+                        <div className="py-10 bg-gray-100">
                             {doctorDetail.markdown &&
                                 doctorDetail.markdown.contentHTML && (
-                                    <article
-                                        className="prose"
-                                        dangerouslySetInnerHTML={{
-                                            __html: doctorDetail.markdown
-                                                .contentHTML,
-                                        }}
-                                    ></article>
+                                    <div className="max-w-screen-xl mx-auto">
+                                        <article
+                                            className="prose"
+                                            dangerouslySetInnerHTML={{
+                                                __html: doctorDetail.markdown
+                                                    .contentHTML,
+                                            }}
+                                        ></article>
+                                    </div>
                                 )}
                         </div>
                     </div>
