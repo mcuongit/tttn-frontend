@@ -33,6 +33,7 @@ export const docTitle = {
         add_user: "Admin | Thêm người dùng",
         edit_user: "Admin | Sửa người dùng",
         schedule: "Admin | Lịch khám",
+        doctor_manage: "Admin | Quản lý bác sĩ",
     },
     USER: {
         home: "Trang chủ",

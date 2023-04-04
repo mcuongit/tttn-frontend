@@ -1,5 +1,5 @@
 import { Navigate, Route, Routes } from "react-router-dom";
-import MagangeDoctor from "./MagangeDoctor";
+import MagangeDoctor from "../doctor/MagangeDoctor";
 import UserAdd from "./UserAdd";
 import UserEdit from "./UserEdit";
 import UsersManage from "./UsersManage";

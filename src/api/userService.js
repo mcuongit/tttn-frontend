@@ -41,24 +41,12 @@ const getAllcodeService = (data) => {
     return axios.get(`http://localhost:5000/allcode/${data}`);
 };
 
-const getAllDoctor = (endpoint) => {
-    return callApi("doctor", endpoint, "GET");
-};
-
-const saveDoctorInfo = (endpoint, data) => {
-    return callApi("doctor", endpoint, "POST", data);
-};
-
-const getDetailDoctor = (endpoint) => {
-    return callApi("doctor", endpoint, "GET");
-};
-
 const getMarkdown = (endpoint) => {
     return callApi("markdown", endpoint, "GET");
 };
 
-const updateMarkdown = (endpoint, data) => {
-    return callApi("markdown", endpoint, "PATCH", data);
+const updateMarkdown = (data) => {
+    return callApi("markdown", "", "PATCH", data);
 };
 
 export {
@@ -71,9 +59,6 @@ export {
     updateUserImgService,
     getOneUser,
     deleteMultipleRecord,
-    getAllDoctor,
-    saveDoctorInfo,
-    getDetailDoctor,
     getMarkdown,
     updateMarkdown,
 };

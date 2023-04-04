@@ -3,10 +3,10 @@ import Header from "../../../components/common/Header";
 import CustomBreadcumb from "../../../components/common/CustomBreadcumb";
 import { Avatar } from "flowbite-react";
 import { useEffect } from "react";
-import { getAllDoctor } from "../../../api/userService";
 import { useState } from "react";
 import { docTitle } from "../../../utils/constant";
 import DoctorSchedule from "./DoctorSchedule";
+import { getAllDoctor } from "../../../api/doctorService";
 
 function DetailDoctor() {
     const { id } = useParams();
@@ -73,7 +73,7 @@ function DetailDoctor() {
                         <hr />
                         <div className="min-h-[200px] py-3 max-w-screen-xl mx-auto flex">
                             <div className="basis-1/2">
-                                <DoctorSchedule />
+                                <DoctorSchedule doctorId={doctorDetail.id} />
                             </div>
                             <div className="basis-1/2"></div>
                         </div>

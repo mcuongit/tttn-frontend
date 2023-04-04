@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { docTitle } from "../../../utils/constant";
 import { Alert, Button, Label, Select, TextInput } from "flowbite-react";
 import DatePicker from "tailwind-datepicker-react";
-import { getAllDoctor } from "../../../api/userService";
 import { getAllCodeType } from "../../../api/allcodeApi";
 import { saveSchedule } from "../../../api/scheduleApi";
+import { getAllDoctor } from "../../../api/doctorService";
 
 function DoctorSchedule() {
     const date = new Date();
@@ -14,7 +14,7 @@ function DoctorSchedule() {
     const currentDate = `${year}-${month}-${day}`;
     const [doctorsList, setDoctorsList] = useState([]);
     const [rangeTime, setRangeTime] = useState([]);
-    const [selectedDate, setSelectedDate] = useState(currentDate);
+    const [selectedDate, setSelectedDate] = useState(null);
     const [selectedDoctor, setSelectedDoctor] = useState(null);
     const [saved, setSaved] = useState(false);
     useEffect(() => {
@@ -37,6 +37,9 @@ function DoctorSchedule() {
                 setRangeTime(clone);
             }
         });
+        const d = new Date();
+        d.setHours(0, 0, 0, 0);
+        setSelectedDate(d);
     }, []);
     const options = {
         autoHide: true,
@@ -61,11 +64,19 @@ function DoctorSchedule() {
         setSelectedDoctor(value);
     };
     const handleSubmit = () => {
-        if (selectedDate.length < 0) {
+        if (!selectedDoctor) {
+            alert("Chưa chọn bác sĩ");
+            return;
+        }
+        if (!selectedDate) {
             alert("Lịch biểu không được để trống");
             return;
         }
         const checkedTime = rangeTime.filter((i) => i.checked === true);
+        if (checkedTime.length <= 0) {
+            alert("Chưa chọn thời gian nào");
+            return;
+        }
         let result = [];
         checkedTime.forEach((element) => {
             const obj = {
