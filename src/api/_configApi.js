@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const APP_URL = import.meta.env.VITE_BACKEND_URL;
+export const APP_URL = import.meta.env.VITE_BACKEND_URL;
 
 const callApi = async (controller, endpoint, method, data) => {
     try {
