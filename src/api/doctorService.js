@@ -27,3 +27,7 @@ export const createDoctorInfo = (data) => {
 export const getMoreDoctorInfo = (endpoint) => {
     return doctorInfoApi(endpoint, "GET");
 };
+
+export const getDoctorProfile = (endpoint) => {
+    return doctorApi(endpoint, "GET");
+};

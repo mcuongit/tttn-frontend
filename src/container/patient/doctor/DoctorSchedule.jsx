@@ -1,10 +1,13 @@
 import { Button, Select } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { getScheduleByDate } from "../../../api/scheduleApi";
+import BookingModal from "./modal/BookingModal";
 
 function DoctorSchedule(props) {
     const [daysList, setDaysList] = useState([]);
     const [availableTime, setAvailableTime] = useState([]);
+    const [isShowModal, setIsShowModal] = useState(false);
+    const [dataSendModal, setDataSendModal] = useState({});
 
     useEffect(() => {
         let a = [];
@@ -44,7 +47,6 @@ function DoctorSchedule(props) {
         dateOnly.setHours(0, 0, 0, 0);
         getScheduleByDate(`get-by-date/${doctorId}/${dateOnly.getTime()}`)
             .then((res) => {
-                console.log(res);
                 if (res && res.data && res.data.statusCode === 0) {
                     setAvailableTime(res.data.data);
                 }
@@ -54,8 +56,22 @@ function DoctorSchedule(props) {
             });
     };
 
+    const handleClickModal = (time) => {
+        setIsShowModal(true);
+        setDataSendModal(time);
+    };
+
+    const closeModal = () => {
+        setIsShowModal(false);
+    };
+
     return (
         <>
+            <BookingModal
+                isShowModal={isShowModal}
+                closeModal={closeModal}
+                dataSent={dataSendModal}
+            />
             <div className="mb-3">
                 <Select
                     required={true}
@@ -78,13 +94,17 @@ function DoctorSchedule(props) {
             <div className="flex gap-3 flex-wrap">
                 {availableTime && availableTime.length > 0
                     ? availableTime.map((item) => (
-                          <Button key={item.id} color="purple">
+                          <Button
+                              key={item.id}
+                              color="purple"
+                              onClick={() => handleClickModal(item)}
+                          >
                               {item.timeTypeData.valueVi}
                           </Button>
                       ))
                     : "Không có thông tin"}
             </div>
-            <div className="flex my-5">
+            <div className="flex mt-5 text-gray-500 text-sm">
                 Chọn <PointerIcon /> và đặt (Phí đặt lịch 0đ)
             </div>
         </>

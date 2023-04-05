@@ -7,6 +7,7 @@ import { useState } from "react";
 import { docTitle } from "../../../utils/constant";
 import DoctorSchedule from "./DoctorSchedule";
 import { getAllDoctor } from "../../../api/doctorService";
+import DoctorExtraInfo from "./DoctorExtraInfo";
 
 function DetailDoctor() {
     const { id } = useParams();
@@ -71,11 +72,13 @@ function DetailDoctor() {
                             </div>
                         </div>
                         <hr />
-                        <div className="min-h-[200px] py-3 max-w-screen-xl mx-auto flex">
+                        <div className="py-8 max-w-screen-xl mx-auto flex divide-x-2">
                             <div className="basis-1/2">
                                 <DoctorSchedule doctorId={doctorDetail.id} />
                             </div>
-                            <div className="basis-1/2"></div>
+                            <div className="basis-1/2 pl-5">
+                                <DoctorExtraInfo doctorId={id} />
+                            </div>
                         </div>
                         <hr />
                         <div className="py-10 bg-gray-100">

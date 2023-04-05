@@ -47,3 +47,7 @@ export const USER_ROLE = {
     DOCTOR: "R2",
     PATIENT: "R3",
 };
+
+export const USER_AVATAR_URL = `${
+    import.meta.env.VITE_BACKEND_URL
+}/users/avatar`;

@@ -150,7 +150,7 @@ function MagangeDoctor() {
                 return false;
             }
         }
-        const b = Object.keys(toSaveInfo);
+        const b = Object.keys(initState);
         for (let index = 0; index < b.length; index++) {
             const element = b[index];
             if (!toSaveInfo[element]) {
