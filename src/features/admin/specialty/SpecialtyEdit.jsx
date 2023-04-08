@@ -4,23 +4,42 @@ import MarkdownIt from "markdown-it";
 import MdEditor from "react-markdown-editor-lite";
 import "react-markdown-editor-lite/lib/index.css";
 import { useState } from "react";
-import { createNewSpec, uploadSpecImg } from "../../../api/specialtyService";
+import {
+    getOneSpecs,
+    updateSpec,
+    uploadSpecImg,
+} from "../../../api/specialtyService";
+import { useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
-function SpecialtyAdd() {
-    const [specialtyInfo, setSpecialtyInfo] = useState({
-        contentHTML: "",
-        contentMarkdown: "",
+function SpecialtyEdit() {
+    const initState = {
+        descriptionHTML: "",
+        descriptionMarkdown: "",
         name: "",
-    });
+    };
+    const [specialtyInfo, setSpecialtyInfo] = useState(initState);
     const [image, setImage] = useState(null);
-    const [isCreated, setIsCreated] = useState(false);
     const [isFail, setIsFail] = useState(false);
     const mdParser = new MarkdownIt();
+    const { id } = useParams();
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (id) {
+            getOneSpecs(id).then((res) => {
+                if (res && res.data && res.data.statusCode === 0) {
+                    console.log(res.data);
+                    setSpecialtyInfo(res.data.spec);
+                }
+            });
+        }
+    }, []);
+
     function handleEditorChange({ html, text }) {
         setSpecialtyInfo({
             ...specialtyInfo,
-            contentHTML: html,
-            contentMarkdown: text,
+            descriptionHTML: html,
+            descriptionMarkdown: text,
         });
     }
     const handleChange = (e) => {
@@ -35,28 +54,31 @@ function SpecialtyAdd() {
         if (!file) return;
         setImage(file);
     };
-    const createSpecialty = (imgName) => {
+    const updateSpecialty = (imgName) => {
         const i = { ...specialtyInfo };
-        if (!i.contentHTML || !i.contentMarkdown || !i.name) {
+        if (!i.descriptionHTML || !i.descriptionMarkdown || !i.name) {
             alert("Chưa điền đủ thông tin");
             return;
         }
-        const data = {
-            name: i.name,
-            descriptionHTML: i.contentHTML,
-            descriptionMarkdown: i.contentMarkdown,
-            image: imgName ? imgName : "",
-        };
-        createNewSpec(data).then((res) => {
+        let data = null;
+        if (imgName) {
+            data = {
+                name: i.name,
+                descriptionHTML: i.descriptionHTML,
+                descriptionMarkdown: i.descriptionMarkdown,
+                image: imgName,
+            };
+        } else {
+            data = {
+                name: i.name,
+                descriptionHTML: i.descriptionHTML,
+                descriptionMarkdown: i.descriptionMarkdown,
+            };
+        }
+        updateSpec(id, data).then((res) => {
             if (res && res.data) {
                 if (res.data.statusCode === 0) {
-                    setIsCreated(true);
-                    setSpecialtyInfo({
-                        contentHTML: "",
-                        contentMarkdown: "",
-                        name: "",
-                    });
-                    setImage(null);
+                    navigate("/admin/specialty");
                 } else {
                     setIsFail(true);
                 }
@@ -69,10 +91,10 @@ function SpecialtyAdd() {
             formData.append("image", image);
             uploadSpecImg(formData).then((response) => {
                 if (response && response.data)
-                    createSpecialty(response.data.name);
+                    updateSpecialty(response.data.name);
             });
         } else {
-            createSpecialty();
+            updateSpecialty();
         }
     };
     return (
@@ -85,18 +107,6 @@ function SpecialtyAdd() {
                     Lưu
                 </Button>
             </div>
-            {isCreated && (
-                <div className="mb-3">
-                    <Alert
-                        color="success"
-                        onDismiss={function onDismiss() {
-                            return setIsCreated(false);
-                        }}
-                    >
-                        Thêm thành công.
-                    </Alert>
-                </div>
-            )}
             {isFail && (
                 <div className="mb-3">
                     <Alert
@@ -138,11 +148,11 @@ function SpecialtyAdd() {
             <MdEditor
                 style={{ height: "500px", marginTop: 8 }}
                 renderHTML={(text) => mdParser.render(text)}
-                value={specialtyInfo.contentMarkdown}
+                value={specialtyInfo.descriptionMarkdown}
                 onChange={handleEditorChange}
             />
         </>
     );
 }
 
-export default SpecialtyAdd;
+export default SpecialtyEdit;

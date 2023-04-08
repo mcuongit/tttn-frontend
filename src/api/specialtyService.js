@@ -16,3 +16,15 @@ export const getSpecImg = () => {
 export const getAllSpecs = () => {
     return axios.get(`${APP_URL}/specialty/`);
 };
+
+export const getOneSpecs = (id) => {
+    return axios.get(`${APP_URL}/specialty/${id}`);
+};
+
+export const removeSpecs = (id) => {
+    return axios.delete(`${APP_URL}/specialty/${id}`);
+};
+
+export const updateSpec = (id, data) => {
+    return axios.patch(`${APP_URL}/specialty/${id}`, data);
+};

@@ -52,3 +52,7 @@ export const USER_ROLE = {
 export const USER_AVATAR_URL = `${
     import.meta.env.VITE_BACKEND_URL
 }/users/avatar`;
+
+export const IMAGE_LINK = {
+    specialty: `${import.meta.env.VITE_BACKEND_URL}/specialty/image`,
+};

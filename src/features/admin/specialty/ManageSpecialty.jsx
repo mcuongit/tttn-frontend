@@ -1,7 +1,8 @@
 import { Avatar, Table } from "flowbite-react";
 import React, { useEffect, useState } from "react";
-import { getAllSpecs } from "../../../api/specialtyService";
+import { getAllSpecs, removeSpecs } from "../../../api/specialtyService";
 import { APP_URL } from "../../../api/_configApi";
+import { Link } from "react-router-dom";
 
 function ManageSpecialty() {
     const [specsList, setSpecsList] = useState([]);
@@ -10,6 +11,17 @@ function ManageSpecialty() {
             if (res && res.data) setSpecsList(res.data);
         });
     }, []);
+    const handleDelete = (id) => {
+        if (!id) {
+            alert("Khong tìm thấy id");
+            return;
+        }
+        removeSpecs(id).then((res) => {
+            if (res && res.data && res.data.statusCode === 0) {
+                setSpecsList(specsList.filter((item) => item.id !== id));
+            }
+        });
+    };
 
     return (
         <>
@@ -29,9 +41,12 @@ function ManageSpecialty() {
                     {specsList &&
                         specsList.map((item) => {
                             return (
-                                <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800">
+                                <Table.Row
+                                    className="bg-white dark:border-gray-700 dark:bg-gray-800"
+                                    key={item.id}
+                                >
                                     <Table.Cell>{item.id}</Table.Cell>
-                                    <Table.Cell>
+                                    <Table.Cell className="w-28">
                                         {item.image ? (
                                             <Avatar
                                                 img={`${APP_URL}/specialty/image/${item.image}`}
@@ -43,18 +58,21 @@ function ManageSpecialty() {
                                     <Table.Cell>{item.name}</Table.Cell>
                                     <Table.Cell>
                                         <div className="flex gap-x-5">
-                                            <a
-                                                href="/tables"
+                                            <Link
+                                                to={`edit/${item.id}`}
                                                 className="font-medium text-blue-600 hover:underline"
                                             >
                                                 Sửa
-                                            </a>
-                                            <a
-                                                href="/tables"
+                                            </Link>
+                                            <button
+                                                to={`delete/${item.id}`}
                                                 className="font-medium text-red-600 hover:underline"
+                                                onClick={() =>
+                                                    handleDelete(item.id)
+                                                }
                                             >
                                                 Xoá
-                                            </a>
+                                            </button>
                                         </div>
                                     </Table.Cell>
                                 </Table.Row>
