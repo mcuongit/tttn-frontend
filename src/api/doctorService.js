@@ -28,6 +28,10 @@ export const getMoreDoctorInfo = (endpoint) => {
     return doctorInfoApi(endpoint, "GET");
 };
 
+export const getBySpecId = (id, province) => {
+    return doctorInfoApi(`get-by-spec/${id}/${province}`, "get");
+};
+
 export const getDoctorProfile = (endpoint) => {
     return doctorApi(endpoint, "GET");
 };

@@ -16,6 +16,7 @@ import {
     getMoreDoctorInfo,
     saveDoctorInfo,
 } from "../../../api/doctorService";
+import { getAllSpecs } from "../../../api/specialtyService";
 
 function MagangeDoctor() {
     const [selectedDoctor, setSelectedDoctor] = useState("");
@@ -36,6 +37,8 @@ function MagangeDoctor() {
         price: [],
         province: [],
         payment: [],
+        specialty: [],
+        clinic: [],
     });
     const initState = {
         priceId: "",
@@ -44,6 +47,8 @@ function MagangeDoctor() {
         addressClinic: "",
         nameClinic: "",
         note: "",
+        specialtyId: "",
+        // clinicId: "",
     };
     const [toSaveInfo, setToSaveInfo] = useState(initState);
 
@@ -72,6 +77,12 @@ function MagangeDoctor() {
         });
         getAllCodeType("PROVINCE").then((res) => {
             copyState.province = [...res.data.data];
+        });
+        getAllSpecs().then((res) => {
+            copyState.specialty = [...res.data];
+        });
+        getAllSpecs().then((res) => {
+            copyState.clinic = [...res.data];
         });
         setDoctorInfo(copyState);
     };
@@ -233,14 +244,46 @@ function MagangeDoctor() {
             )}
 
             <div className="mb-3">
-                <Label htmlFor="doctor" value="Chọn bác sĩ" />
-                <Select
-                    className="my-2 sm:w-full md:w-1/2 lg:w-1/4"
-                    id="doctor"
-                    value={selectedDoctor}
-                    onChange={handleChange}
-                    options={optionsList}
-                />
+                <div className="flex gap-x-2 mb-3">
+                    <div className="basis-1/3">
+                        <Label htmlFor="doctor" value="Chọn bác sĩ" />
+                        <Select
+                            id="doctor"
+                            value={selectedDoctor}
+                            onChange={handleChange}
+                            options={optionsList}
+                        />
+                    </div>
+                    <div className="basis-1/3">
+                        <Label htmlFor="spec" value="Chuyên khoa" />
+                        <Sl
+                            id="spec"
+                            name="specialtyId"
+                            value={toSaveInfo.specialtyId}
+                            onChange={(e) => {
+                                handleInfoChange(e);
+                            }}
+                        >
+                            <option>Chọn chuyên khoa...</option>
+                            {doctorInfo &&
+                                doctorInfo.specialty &&
+                                doctorInfo.specialty.map((item) => {
+                                    return (
+                                        <option key={item.id} value={item.id}>
+                                            {item.name}
+                                        </option>
+                                    );
+                                })}
+                        </Sl>
+                    </div>
+                    <div className="basis-1/3">
+                        <Label htmlFor="clinic" value="Phòng khám" />
+                        <Sl id="clinic">
+                            <option value="">Phòng khám 0</option>
+                            <option value="1">Phòng khám 1</option>
+                        </Sl>
+                    </div>
+                </div>
                 <div className="flex flex-wrap">
                     <div className="basis-1/3 px-2 mb-3">
                         <div className="mb-2 block">

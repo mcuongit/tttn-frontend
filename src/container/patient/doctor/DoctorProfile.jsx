@@ -32,7 +32,7 @@ function DoctorProfile(props) {
         <>
             {dataProfile && (
                 <>
-                    <div className="flex items-center border-2 border-dashed rounded-md p-2">
+                    <div className="flex items-center p-2">
                         <div className="basis-1/4">
                             <Avatar
                                 img={
@@ -55,11 +55,9 @@ function DoctorProfile(props) {
                             </div>
                             {showDesc === true && (
                                 <div className="text-gray-500">
-                                    <small>
-                                        {dataProfile.markdown
-                                            ? dataProfile.markdown.description
-                                            : ""}
-                                    </small>
+                                    {dataProfile.markdown
+                                        ? dataProfile.markdown.description
+                                        : ""}
                                 </div>
                             )}
                         </div>

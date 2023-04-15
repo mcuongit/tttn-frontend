@@ -16,6 +16,7 @@ import { Suspense } from "react";
 import { useSelector } from "react-redux";
 import DetailDoctor from "./container/patient/doctor/DetailDoctor";
 import VerifyEmail from "./container/patient/VerifyEmail";
+import DetailSpecilaty from "./container/patient/specialty/DetailSpecilaty";
 
 function App() {
     const selector = useSelector((state) => state.auth.isLogin);
@@ -28,6 +29,10 @@ function App() {
                         <Route
                             path={path.DETAIL_DOCTOR}
                             element={<DetailDoctor />}
+                        />
+                        <Route
+                            path={path.DETAIL_SPECIALTY}
+                            element={<DetailSpecilaty />}
                         />
                         <Route
                             path={path.VERIFY_EMAIL}
