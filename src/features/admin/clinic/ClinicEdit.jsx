@@ -4,35 +4,47 @@ import MarkdownIt from "markdown-it";
 import MdEditor from "react-markdown-editor-lite";
 import "react-markdown-editor-lite/lib/index.css";
 import { useState } from "react";
-import { createNewSpec, uploadSpecImg } from "../../../api/specialtyService";
 import { useEffect } from "react";
 import { docTitle } from "../../../utils/constant";
+import {
+    updateClinicById,
+    findOneClinic,
+    uploadClinicImage,
+} from "../../../api/clinicService";
+import { useParams } from "react-router-dom";
 
-function SpecialtyAdd() {
-    useEffect(() => {
-        document.title = docTitle.ADMIN.add_spec;
-    }, []);
-
-    const [specialtyInfo, setSpecialtyInfo] = useState({
-        contentHTML: "",
-        contentMarkdown: "",
+function ClinicEdit() {
+    const { id } = useParams();
+    const [clinicInfo, setClinicInfo] = useState({
+        descriptionHTML: "",
+        descriptionMarkdown: "",
         name: "",
+        address: "",
     });
+    useEffect(() => {
+        document.title = docTitle.ADMIN.edit_clinic;
+        findOneClinic(id).then((res) => {
+            if (res && res.data) {
+                setClinicInfo(res.data);
+            }
+        });
+    }, []);
     const [image, setImage] = useState(null);
     const [isCreated, setIsCreated] = useState(false);
     const [isFail, setIsFail] = useState(false);
     const mdParser = new MarkdownIt();
     function handleEditorChange({ html, text }) {
-        setSpecialtyInfo({
-            ...specialtyInfo,
-            contentHTML: html,
-            contentMarkdown: text,
+        setClinicInfo({
+            ...clinicInfo,
+            descriptionHTML: html,
+            descriptionMarkdown: text,
         });
     }
     const handleChange = (e) => {
-        setSpecialtyInfo({
-            ...specialtyInfo,
-            name: e.target.value,
+        const { name, value } = e.target;
+        setClinicInfo({
+            ...clinicInfo,
+            [name]: value,
         });
     };
     const handleFileChange = (e) => {
@@ -41,26 +53,33 @@ function SpecialtyAdd() {
         if (!file) return;
         setImage(file);
     };
-    const createSpecialty = (imgName) => {
-        const i = { ...specialtyInfo };
-        if (!i.contentHTML || !i.contentMarkdown || !i.name) {
+    const updateClinic = (imgName) => {
+        const i = { ...clinicInfo };
+        if (
+            !i.descriptionHTML ||
+            !i.descriptionMarkdown ||
+            !i.name ||
+            !i.address
+        ) {
             alert("Chưa điền đủ thông tin");
             return;
         }
         const data = {
             name: i.name,
-            descriptionHTML: i.contentHTML,
-            descriptionMarkdown: i.contentMarkdown,
+            descriptionHTML: i.descriptionHTML,
+            descriptionMarkdown: i.descriptionMarkdown,
+            address: i.address,
             image: imgName ? imgName : "",
         };
-        createNewSpec(data).then((res) => {
+        updateClinicById(id, data).then((res) => {
             if (res && res.data) {
                 if (res.data.statusCode === 0) {
                     setIsCreated(true);
-                    setSpecialtyInfo({
-                        contentHTML: "",
-                        contentMarkdown: "",
+                    setClinicInfo({
+                        descriptionHTML: "",
+                        descriptionMarkdown: "",
                         name: "",
+                        address: "",
                     });
                     setImage(null);
                 } else {
@@ -73,22 +92,21 @@ function SpecialtyAdd() {
         if (image) {
             const formData = new FormData();
             formData.append("image", image);
-            uploadSpecImg(formData).then((response) => {
-                if (response && response.data)
-                    createSpecialty(response.data.name);
+            uploadClinicImage(formData).then((response) => {
+                if (response && response.data) updateClinic(response.data.name);
             });
         } else {
-            createSpecialty();
+            updateClinic();
         }
     };
     return (
         <>
             <div className="flex justify-between items-center mb-3">
                 <h1 className="text-2xl uppercase font-semibold">
-                    Thêm mới chuyên khoa
+                    Sửa thông tin phòng khám
                 </h1>
                 <Button size="sm" onClick={handleSubmit}>
-                    Lưu
+                    Lưu thông tin
                 </Button>
             </div>
             {isCreated && (
@@ -99,7 +117,7 @@ function SpecialtyAdd() {
                             return setIsCreated(false);
                         }}
                     >
-                        Thêm thành công.
+                        Sửa thành công.
                     </Alert>
                 </div>
             )}
@@ -119,36 +137,50 @@ function SpecialtyAdd() {
             <div className="grid grid-cols-2 gap-3">
                 <div>
                     <div className="mb-2 block">
-                        <Label htmlFor="name" value="Tên chuyên khoa" />
+                        <Label htmlFor="name" value="Tên phòng khám" />
                     </div>
                     <TextInput
+                        placeholder="Nhập tên"
                         id="name"
                         type="text"
                         name="name"
-                        value={specialtyInfo.name}
+                        value={clinicInfo.name}
                         onChange={handleChange}
                     />
                 </div>
                 <div>
                     <div className="mb-2 block">
-                        <Label htmlFor="file" value="Hình ảnh chuyên khoa" />
+                        <Label htmlFor="file" value="Hình ảnh phòng khám" />
                     </div>
                     <FileInput
                         id="file"
                         onChange={handleFileChange}
-                        helperText="A profile picture is useful to confirm your are logged into your account"
+                        helperText="A profile picture is useful to confirm your clinic"
                     />
                 </div>
+            </div>
+            <div className="mb-3">
+                <div className="mb-2 block">
+                    <Label htmlFor="address" value="Địa chỉ phòng khám" />
+                </div>
+                <TextInput
+                    placeholder="Nhập địa chỉ"
+                    id="address"
+                    type="text"
+                    name="address"
+                    value={clinicInfo.address}
+                    onChange={handleChange}
+                />
             </div>
             <Label value="Viết bài" />
             <MdEditor
                 style={{ height: "500px", marginTop: 8 }}
                 renderHTML={(text) => mdParser.render(text)}
-                value={specialtyInfo.contentMarkdown}
+                value={clinicInfo.descriptionMarkdown}
                 onChange={handleEditorChange}
             />
         </>
     );
 }
 
-export default SpecialtyAdd;
+export default ClinicEdit;

@@ -1,16 +1,16 @@
 import { Avatar, Table } from "flowbite-react";
 import React, { useEffect, useState } from "react";
-import { getAllSpecs, removeSpecs } from "../../../api/specialtyService";
 import { APP_URL } from "../../../api/_configApi";
 import { Link } from "react-router-dom";
 import { docTitle } from "../../../utils/constant";
+import { findAllClinic, removeClinic } from "../../../api/clinicService";
 
-function ManageSpecialty() {
-    const [specsList, setSpecsList] = useState([]);
+function ManageClinic() {
+    const [clinicsList, setClinicsList] = useState([]);
     useEffect(() => {
-        document.title = docTitle.ADMIN.spec_manage;
-        getAllSpecs().then((res) => {
-            if (res && res.data) setSpecsList(res.data);
+        document.title = docTitle.ADMIN.clinic_manage;
+        findAllClinic().then((res) => {
+            if (res && res.data) setClinicsList(res.data);
         });
     }, []);
     const handleDelete = (id) => {
@@ -18,9 +18,9 @@ function ManageSpecialty() {
             alert("Khong tìm thấy id");
             return;
         }
-        removeSpecs(id).then((res) => {
+        removeClinic(id).then((res) => {
             if (res && res.data && res.data.statusCode === 0) {
-                setSpecsList(specsList.filter((item) => item.id !== id));
+                setClinicsList(clinicsList.filter((item) => item.id !== id));
             }
         });
     };
@@ -29,19 +29,20 @@ function ManageSpecialty() {
         <>
             <div className="mb-5">
                 <h1 className="text-2xl uppercase font-semibold">
-                    Quản lý chuyên khoa
+                    Quản lý phòng khám
                 </h1>
             </div>
             <Table>
                 <Table.Head>
                     <Table.HeadCell>ID</Table.HeadCell>
                     <Table.HeadCell>Hình ảnh</Table.HeadCell>
-                    <Table.HeadCell>Tên khoa</Table.HeadCell>
+                    <Table.HeadCell>Tên phòng khám</Table.HeadCell>
+                    <Table.HeadCell>Địa chỉ</Table.HeadCell>
                     <Table.HeadCell>Hành động</Table.HeadCell>
                 </Table.Head>
                 <Table.Body className="divide-y">
-                    {specsList &&
-                        specsList.map((item) => {
+                    {clinicsList &&
+                        clinicsList.map((item) => {
                             return (
                                 <Table.Row
                                     className="bg-white dark:border-gray-700 dark:bg-gray-800"
@@ -51,13 +52,14 @@ function ManageSpecialty() {
                                     <Table.Cell className="w-28">
                                         {item.image ? (
                                             <Avatar
-                                                img={`${APP_URL}/specialty/image/${item.image}`}
+                                                img={`${APP_URL}/clinic/image/${item.image}`}
                                             />
                                         ) : (
                                             <Avatar />
                                         )}
                                     </Table.Cell>
                                     <Table.Cell>{item.name}</Table.Cell>
+                                    <Table.Cell>{item.address}</Table.Cell>
                                     <Table.Cell>
                                         <div className="flex gap-x-5">
                                             <Link
@@ -86,4 +88,4 @@ function ManageSpecialty() {
     );
 }
 
-export default ManageSpecialty;
+export default ManageClinic;

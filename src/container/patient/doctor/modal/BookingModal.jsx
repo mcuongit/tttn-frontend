@@ -246,6 +246,7 @@ function BookingModal(props) {
                             : -1
                     }
                     showDesc={false}
+                    showPrice
                 />
                 {dataSent && (
                     <div className="font-semibold mb-3">

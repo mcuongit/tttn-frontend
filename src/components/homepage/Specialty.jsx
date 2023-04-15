@@ -13,14 +13,6 @@ import { Link } from "react-router-dom";
 
 function Specialty() {
     const { t } = useTranslation();
-    const s = [
-        "Cơ xương khớp",
-        "Thần kinh",
-        "Tiêu hoá",
-        "Tim mạch",
-        "Tai mũi họng",
-        "Cột sống",
-    ];
     const settings = {
         dots: true,
         infinite: true,
@@ -35,7 +27,6 @@ function Specialty() {
             if (res && res.data) {
                 setSpecsList(res.data);
             }
-            console.log(res);
         });
     }, []);
 

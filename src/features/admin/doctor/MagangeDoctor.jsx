@@ -17,6 +17,7 @@ import {
     saveDoctorInfo,
 } from "../../../api/doctorService";
 import { getAllSpecs } from "../../../api/specialtyService";
+import { findAllClinic } from "../../../api/clinicService";
 
 function MagangeDoctor() {
     const [selectedDoctor, setSelectedDoctor] = useState("");
@@ -48,7 +49,7 @@ function MagangeDoctor() {
         nameClinic: "",
         note: "",
         specialtyId: "",
-        // clinicId: "",
+        clinicId: "",
     };
     const [toSaveInfo, setToSaveInfo] = useState(initState);
 
@@ -81,7 +82,7 @@ function MagangeDoctor() {
         getAllSpecs().then((res) => {
             copyState.specialty = [...res.data];
         });
-        getAllSpecs().then((res) => {
+        findAllClinic().then((res) => {
             copyState.clinic = [...res.data];
         });
         setDoctorInfo(copyState);
@@ -278,9 +279,24 @@ function MagangeDoctor() {
                     </div>
                     <div className="basis-1/3">
                         <Label htmlFor="clinic" value="Phòng khám" />
-                        <Sl id="clinic">
-                            <option value="">Phòng khám 0</option>
-                            <option value="1">Phòng khám 1</option>
+                        <Sl
+                            id="clinic"
+                            name="clinicId"
+                            value={toSaveInfo.clinicId}
+                            onChange={(e) => {
+                                handleInfoChange(e);
+                            }}
+                        >
+                            <option value="">Chọn phòng khám</option>
+                            {doctorInfo &&
+                                doctorInfo.clinic &&
+                                doctorInfo.clinic.map((item) => {
+                                    return (
+                                        <option value={item.id}>
+                                            {item.name}
+                                        </option>
+                                    );
+                                })}
                         </Sl>
                     </div>
                 </div>

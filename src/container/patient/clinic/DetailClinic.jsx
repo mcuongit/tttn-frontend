@@ -6,22 +6,22 @@ import React from "react";
 import DoctorExtraInfo from "../doctor/DoctorExtraInfo";
 import DoctorProfile from "../doctor/DoctorProfile";
 import { useEffect } from "react";
-import { getOneSpecs } from "../../../api/specialtyService";
-import { getBySpecId } from "../../../api/doctorService";
+import { findAllByClinic, getBySpecId } from "../../../api/doctorService";
 import { getAllCodeType } from "../../../api/allcodeApi";
 import { Select } from "flowbite-react";
 import { docTitle } from "../../../utils/constant";
+import { findOneClinic } from "../../../api/clinicService";
 
-function DetailSpecilaty() {
+function DetailClinic() {
     const { id } = useParams();
     const [doctorsList, setDoctorsList] = useState([]);
     const [provincesList, setProvincesList] = useState([]);
-    const [specInfo, setSpecInfo] = useState({});
+    const [clinicInfo, setClinicInfo] = useState({});
     useEffect(() => {
         document.title = docTitle.USER.detail_spec;
-        getOneSpecs(id).then((res) => {
-            if (res && res.data && res.data.spec) {
-                setSpecInfo(res.data.spec);
+        findOneClinic(id).then((res) => {
+            if (res && res.data) {
+                setClinicInfo(res.data);
             }
         });
         fetchData("ALL");
@@ -32,10 +32,10 @@ function DetailSpecilaty() {
         });
     }, []);
 
-    const fetchData = (prov) => {
-        getBySpecId(id, prov).then((res) => {
-            if (res && res.data && res.data.statusCode === 0) {
-                setDoctorsList(res.data.data);
+    const fetchData = () => {
+        findAllByClinic(id).then((res) => {
+            if (res && res.data) {
+                setDoctorsList(res.data);
             }
         });
     };
@@ -49,11 +49,11 @@ function DetailSpecilaty() {
             <Header />
             <div className="my-3 min-h-[300px]">
                 <div className="max-w-screen-xl mx-auto py-5">
-                    {specInfo ? (
+                    {clinicInfo ? (
                         <article
                             className="prose"
                             dangerouslySetInnerHTML={{
-                                __html: specInfo.descriptionHTML,
+                                __html: clinicInfo.descriptionHTML,
                             }}
                         ></article>
                     ) : (
@@ -112,4 +112,4 @@ function DetailSpecilaty() {
     );
 }
 
-export default DetailSpecilaty;
+export default DetailClinic;

@@ -32,6 +32,10 @@ export const getBySpecId = (id, province) => {
     return doctorInfoApi(`get-by-spec/${id}/${province}`, "get");
 };
 
+export const findAllByClinic = (id) => {
+    return doctorInfoApi(`find-by-clinic/${id}`, "get");
+};
+
 export const getDoctorProfile = (endpoint) => {
     return doctorApi(endpoint, "GET");
 };
