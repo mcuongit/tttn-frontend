@@ -12,8 +12,10 @@ import { useState } from "react";
 import { useEffect } from "react";
 import DatePicker from "tailwind-datepicker-react";
 import { createBooking } from "../../../../api/bookingService";
+import { useNavigate } from "react-router-dom";
 
 function BookingModal(props) {
+    const navigate = useNavigate();
     const { dataSent, isShowModal, closeModal } = props;
     const [daytime, setDaytime] = useState(null);
     useEffect(() => {
@@ -45,17 +47,25 @@ function BookingModal(props) {
             if (!validate()) return;
             const { firstName, lastName } = dataSent.userData;
             const doctorName = `${firstName} ${lastName}`;
-            let _bookingReq = {
+            const d = new Date();
+            d.setHours(0, 0, 0, 0);
+            const _bookingReq = {
                 ...bookingReq,
-                date: bookingReq.birthday,
+                date: d.getTime(),
                 timeString: `${dataSent.timeTypeData.valueVi} - ${daytime}`,
                 doctorName: doctorName,
             };
             setIsLoading(true);
-            createBooking(_bookingReq).then((res) => {
-                console.log(res);
-                setIsLoading(false);
-            });
+            createBooking(_bookingReq)
+                .then((res) => {
+                    console.log(res);
+                    setIsLoading(false);
+                    navigate("/booking/success?email=" + bookingReq.email);
+                })
+                .catch((e) => {
+                    alert(e.response.data.message);
+                    setIsLoading(false);
+                });
         };
         const initState = {
             fullName: "",
@@ -64,7 +74,7 @@ function BookingModal(props) {
             address: "",
             reason: "",
             birthday: "",
-            gender: "M",
+            gender: "Nam",
             doctorId: props.doctorId,
             timeType: dataSent.timeType,
         };
@@ -148,8 +158,8 @@ function BookingModal(props) {
                             name="gender"
                             onChange={handleInputChange}
                         >
-                            <option value="M">Nam</option>
-                            <option value="F">Nữ</option>
+                            <option value="Nam">Nam</option>
+                            <option value="Nữ">Nữ</option>
                         </Select>
                     </div>
 

@@ -5,6 +5,7 @@ import { Outlet, NavLink, Link, useNavigate } from "react-router-dom";
 import { USER_ROLE, path } from "../../../utils/constant";
 import { handleLogin } from "../slices/loginSlice";
 import { menuAdmin, menuDoctor } from "./menuContant.jsx";
+import { saveUser } from "../slices/userSlice";
 
 function LayoutAdmin() {
     const navigate = useNavigate();
@@ -36,6 +37,7 @@ function LayoutAdmin() {
 
     const handleSignOut = () => {
         dispatch(handleLogin(false));
+        dispatch(saveUser({}));
         setIsSignedOut(true);
     };
 

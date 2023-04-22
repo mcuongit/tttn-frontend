@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom";
-import Header from "../../../components/common/Header";
 import { useState } from "react";
 import DoctorSchedule from "../doctor/DoctorSchedule";
 import React from "react";
@@ -46,7 +45,6 @@ function DetailClinic() {
 
     return (
         <>
-            <Header />
             <div className="my-3 min-h-[300px]">
                 <div className="max-w-screen-xl mx-auto py-5">
                     {clinicInfo ? (

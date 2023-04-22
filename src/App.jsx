@@ -18,6 +18,7 @@ import DetailDoctor from "./container/patient/doctor/DetailDoctor";
 import VerifyEmail from "./container/patient/VerifyEmail";
 import DetailSpecilaty from "./container/patient/specialty/DetailSpecilaty";
 import DetailClinic from "./container/patient/clinic/DetailClinic";
+import BookingSuccess from "./container/patient/BookingSuccess";
 
 function App() {
     const selector = useSelector((state) => state.auth.isLogin);
@@ -42,6 +43,10 @@ function App() {
                         <Route
                             path={path.VERIFY_EMAIL}
                             element={<VerifyEmail />}
+                        />
+                        <Route
+                            path={"booking/success"}
+                            element={<BookingSuccess />}
                         />
                     </Route>
                     <Route

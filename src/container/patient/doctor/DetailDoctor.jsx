@@ -1,5 +1,4 @@
 import { useParams } from "react-router-dom";
-import Header from "../../../components/common/Header";
 import CustomBreadcumb from "../../../components/common/CustomBreadcumb";
 import { Avatar } from "flowbite-react";
 import { useEffect } from "react";
@@ -30,7 +29,6 @@ function DetailDoctor() {
 
     return (
         <>
-            <Header />
             <section>
                 <div className="mb-3 max-w-screen-xl mx-auto">
                     <CustomBreadcumb crumbs={crumbs} />

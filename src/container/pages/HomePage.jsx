@@ -16,14 +16,12 @@ function HomePage() {
     }, []);
     return (
         <>
-            <Header />
             <Banner />
             <Specialty />
             <MedicalFacility />
             <DoctorPopular />
             <HandBook />
             <About />
-            <Footers />
         </>
     );
 }

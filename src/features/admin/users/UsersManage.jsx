@@ -79,7 +79,7 @@ function UsersManage() {
 
     const handleMultipleDelete = () => {
         if (checkList.length === 0) {
-            alert("Vui lòng chọn ít nhất 1 sản phẩm để xoá");
+            alert("Vui lòng chọn ít nhất 1 mục để xoá");
             return;
         } else if (checkList.length === usersList.length) {
             alert("Cần để lại tối thiểu 1 tài khoản");
@@ -92,7 +92,7 @@ function UsersManage() {
                     if (affected <= 0) return;
                     setAlertContent({
                         color: "success",
-                        msg: `Xoá thành công ${affected} tài khoản.`,
+                        msg: `Xóa thành công ${affected} tài khoản.`,
                     });
                     let a = [...usersList];
                     checkList.forEach((element) => {
@@ -127,7 +127,7 @@ function UsersManage() {
                 <div className="flex gap-x-2">
                     <Button className="uppercase mb-3" size={"xs"}>
                         <AddIcon className="h-5 w-5" />
-                        <Link to={"/admin/users/add"}>Thêm user</Link>
+                        <Link to={"/admin/users/add"}>Thêm tài khoản</Link>
                     </Button>
                     <Button
                         className="uppercase mb-3"
@@ -137,7 +137,7 @@ function UsersManage() {
                         onClick={handleMultipleDelete}
                     >
                         <TrashIcon />
-                        Xoá user
+                        Xóa
                     </Button>
                 </div>
             </div>
@@ -157,11 +157,12 @@ function UsersManage() {
                 <Table hoverable={true}>
                     <Table.Head>
                         <Table.HeadCell className="!p-4">#</Table.HeadCell>
-                        <Table.HeadCell>First name</Table.HeadCell>
-                        <Table.HeadCell>Last name</Table.HeadCell>
+                        <Table.HeadCell>Họ</Table.HeadCell>
+                        <Table.HeadCell>Tên</Table.HeadCell>
                         <Table.HeadCell>Email</Table.HeadCell>
-                        <Table.HeadCell>Address</Table.HeadCell>
-                        <Table.HeadCell>Action</Table.HeadCell>
+                        <Table.HeadCell>Địa chỉ</Table.HeadCell>
+                        <Table.HeadCell>Quyền</Table.HeadCell>
+                        <Table.HeadCell>Hành động</Table.HeadCell>
                     </Table.Head>
                     <Table.Body className="divide-y">
                         {loading ? (
@@ -180,44 +181,56 @@ function UsersManage() {
                         ) : (
                             usersList &&
                             usersList.length > 0 &&
-                            usersList.map((item) => (
-                                <Table.Row key={item.id} className="bg-white">
-                                    <Table.Cell className="!p-4">
-                                        <Checkbox
-                                            value={item.id}
-                                            onChange={(e) =>
-                                                handleCheckBoxChange(e)
-                                            }
-                                        />
-                                    </Table.Cell>
-                                    <Table.Cell className="whitespace-nowrap font-medium text-gray-900">
-                                        {item.firstName}
-                                    </Table.Cell>
-                                    <Table.Cell className="whitespace-nowrap font-medium text-gray-900">
-                                        {item.lastName}
-                                    </Table.Cell>
-                                    <Table.Cell>{item.email}</Table.Cell>
-                                    <Table.Cell>{item.address}</Table.Cell>
-                                    <Table.Cell>
-                                        <div className="flex gap-x-4 w-full">
-                                            <Link
-                                                to={`/admin/users/edit/${item.id}`}
-                                                className="font-medium text-blue-600 hover:underline"
-                                            >
-                                                Edit
-                                            </Link>
-                                            <button
-                                                onClick={() => {
-                                                    handleDelete(item.id);
-                                                }}
-                                                className="font-medium text-red-600 hover:underline"
-                                            >
-                                                Delete
-                                            </button>
-                                        </div>
-                                    </Table.Cell>
-                                </Table.Row>
-                            ))
+                            usersList.map((item) => {
+                                const role =
+                                    item.roleId === "R1"
+                                        ? "Admin"
+                                        : item.roleId === "R2"
+                                        ? "Bác sĩ"
+                                        : "Bệnh nhân";
+                                return (
+                                    <Table.Row
+                                        key={item.id}
+                                        className="bg-white"
+                                    >
+                                        <Table.Cell className="!p-4">
+                                            <Checkbox
+                                                value={item.id}
+                                                onChange={(e) =>
+                                                    handleCheckBoxChange(e)
+                                                }
+                                            />
+                                        </Table.Cell>
+                                        <Table.Cell className="whitespace-nowrap font-medium text-gray-900">
+                                            {item.firstName}
+                                        </Table.Cell>
+                                        <Table.Cell className="whitespace-nowrap font-medium text-gray-900">
+                                            {item.lastName}
+                                        </Table.Cell>
+                                        <Table.Cell>{item.email}</Table.Cell>
+                                        <Table.Cell>{item.address}</Table.Cell>
+                                        <Table.Cell>{role}</Table.Cell>
+                                        <Table.Cell>
+                                            <div className="flex gap-x-4 w-full">
+                                                <Link
+                                                    to={`/admin/users/edit/${item.id}`}
+                                                    className="font-medium text-blue-600 hover:underline"
+                                                >
+                                                    Sửa
+                                                </Link>
+                                                <button
+                                                    onClick={() => {
+                                                        handleDelete(item.id);
+                                                    }}
+                                                    className="font-medium text-red-600 hover:underline"
+                                                >
+                                                    Xóa
+                                                </button>
+                                            </div>
+                                        </Table.Cell>
+                                    </Table.Row>
+                                );
+                            })
                         )}
                     </Table.Body>
                 </Table>
