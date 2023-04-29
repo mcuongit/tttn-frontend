@@ -7,6 +7,8 @@ import { docTitle } from "../../../utils/constant";
 import DoctorSchedule from "./DoctorSchedule";
 import { getAllDoctor } from "../../../api/doctorService";
 import DoctorExtraInfo from "./DoctorExtraInfo";
+import CommentFB from "../socialplugin/CommentFB";
+import LikeAndShare from "../socialplugin/LikeAndShare";
 
 function DetailDoctor() {
     const { id } = useParams();
@@ -58,9 +60,17 @@ function DetailDoctor() {
                                 </h1>
                                 {doctorDetail.markdown &&
                                     doctorDetail.markdown.description && (
-                                        <span>
-                                            {doctorDetail.markdown.description}
-                                        </span>
+                                        <>
+                                            <span>
+                                                {
+                                                    doctorDetail.markdown
+                                                        .description
+                                                }
+                                            </span>
+                                            <br />
+                                            <hr className="my-5" />
+                                            <LikeAndShare link="https://google.com.vn" />
+                                        </>
                                     )}
                                 {!doctorDetail.markdown && (
                                     <span className="text-red-600 text-center">
@@ -100,6 +110,7 @@ function DetailDoctor() {
                     </h1>
                 )}
             </section>
+            <CommentFB link="https://google.com" />
         </>
     );
 }

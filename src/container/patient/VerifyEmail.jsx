@@ -1,10 +1,12 @@
 import { useSearchParams } from "react-router-dom";
-import Footers from "../../components/common/Footers";
-import Header from "../../components/common/Header";
 import { veriryEmail } from "../../api/verifyEmailService";
 import { useEffect, useState } from "react";
 
 function VerifyEmail() {
+    useEffect(() => {
+        document.title = "Xác nhận lịch khám";
+    }, []);
+
     const [searchParams] = useSearchParams();
     const token = searchParams.get("token");
     const doctorId = searchParams.get("doctorId");

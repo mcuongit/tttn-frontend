@@ -10,6 +10,7 @@ import SpecialtyEdit from "./specialty/SpecialtyEdit";
 import ManageClinic from "./clinic/ManageClinic";
 import ClinicAdd from "./clinic/ClinicAdd";
 import ClinicEdit from "./clinic/ClinicEdit";
+import PatientBooking from "./patient/PatientBooking";
 
 function RouteAdmin() {
     return (
@@ -29,6 +30,7 @@ function RouteAdmin() {
                 <Route path={"clinic"} element={<ManageClinic />} />
                 <Route path={"clinic/add"} element={<ClinicAdd />} />
                 <Route path={"clinic/edit/:id"} element={<ClinicEdit />} />
+                <Route path={"patient"} element={<PatientBooking />} />
             </Route>
             <Route path="*" element={<NotFound />} />
         </Routes>
