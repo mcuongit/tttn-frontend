@@ -4,7 +4,6 @@ import { Provider } from "react-redux";
 import App from "./App";
 import store, { persistor } from "./app/store";
 import "./index.css";
-import "./i18n";
 import "flowbite/dist/flowbite.min.js";
 import { PersistGate } from "redux-persist/integration/react";
 

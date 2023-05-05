@@ -9,7 +9,7 @@ export default function LikeAndShare(props) {
     return (
         <>
             <div
-                class="fb-like"
+                className="fb-like"
                 data-href="https://developers.facebook.com/docs/plugins/"
                 data-width=""
                 data-layout=""

@@ -1,37 +1,29 @@
 import React from "react";
-import logoApp from "../../assets/logo.svg";
-import { MenuIcon, Question } from "../../utils/HeroIcon";
-import { Select } from "flowbite-react";
-import { useDispatch, useSelector } from "react-redux";
-import { changeLanguage } from "../../features/languagesSlice";
-import { useTranslation } from "react-i18next";
-import { LANGUAGES, path } from "../../utils/constant";
+import logoApp from "../../assets/yinyang.svg";
+import { MenuIcon } from "../../utils/HeroIcon";
+import { Button } from "flowbite-react";
+import { path } from "../../utils/constant";
 import { Link } from "react-router-dom";
 
 function Header() {
-    const lang = useSelector((state) => state.language);
-    const dispatch = useDispatch();
-    const { t, i18n } = useTranslation();
-
-    const handleSelectChange = (e) => {
-        const value = e.target.value;
-        const action = changeLanguage(value);
-        dispatch(action);
-        i18n.changeLanguage(value);
-    };
-
     return (
         <header className="bg-white">
             <div className="container max-w-screen-xl mx-auto text-base">
                 <div className="flex flex-row items-center py-4 justify-start">
                     <div className="basis-3/12 flex flex-row items-center gap-x-2">
                         <MenuIcon />
-                        <Link to={path.HOME}>
+                        <Link
+                            to={path.HOME}
+                            className="flex items-center gap-x-1"
+                        >
                             <img
-                                className="w-[200px] h-auto"
+                                className="w-[40px] h-auto"
                                 srcSet={logoApp}
                                 alt="logo"
                             />
+                            <span className="text-3xl font-bold tracking-tight">
+                                CuongStore
+                            </span>
                         </Link>
                     </div>
                     <nav className="basis-7/12">
@@ -39,71 +31,37 @@ function Header() {
                             <li>
                                 <a href="#">
                                     <div className="font-semibold">
-                                        {t("homepage.header.specialty")}
+                                        Chuyên khoa
                                     </div>
-                                    <small>
-                                        {t("homepage.header.searchdoctor")}
-                                    </small>
+                                    <small>Tìm bác sĩ theo chuyên khoa</small>
                                 </a>
                             </li>
                             <li>
                                 <a href="#">
                                     <div className="font-semibold">
-                                        {t("homepage.header.health-facilities")}
+                                        Cơ sở y tế
                                     </div>
-                                    <small>
-                                        {t("homepage.header.select-room")}
-                                    </small>
+                                    <small>Chọn bệnh viện phòng khám</small>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#">
+                                    <div className="font-semibold">Bác sĩ</div>
+                                    <small>Chọn bác sĩ giỏi</small>
                                 </a>
                             </li>
                             <li>
                                 <a href="#">
                                     <div className="font-semibold">
-                                        {t("homepage.header.doctor")}
+                                        Gói khám
                                     </div>
-                                    <small>
-                                        {t("homepage.header.choose-doctor")}
-                                    </small>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#">
-                                    <div className="font-semibold">
-                                        {t("homepage.header.medical-package")}
-                                    </div>
-                                    <small>
-                                        {t(
-                                            "homepage.header.general-health-check"
-                                        )}
-                                    </small>
+                                    <small>Khám sức khoẻ tổng quát</small>
                                 </a>
                             </li>
                         </ul>
                     </nav>
                     <div className="basis-2/12 flex items-center justify-around">
-                        <a
-                            href="#"
-                            className="flex justify-center text-gray-400"
-                        >
-                            <Question />
-                            <span className="font-bold">
-                                {t("homepage.header.support")}
-                            </span>
-                        </a>
-                        <div id="select">
-                            <Select
-                                id="lang"
-                                required={true}
-                                sizing="sm"
-                                defaultValue={lang.value}
-                                onChange={(e) => {
-                                    handleSelectChange(e);
-                                }}
-                            >
-                                <option value={LANGUAGES.VI}>Tiếng Việt</option>
-                                <option value={LANGUAGES.EN}>English</option>
-                            </Select>
-                        </div>
+                        <Button size={"sm"}>Tài khoản</Button>
                     </div>
                 </div>
             </div>

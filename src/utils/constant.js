@@ -9,26 +9,6 @@ export const path = {
     VERIFY_EMAIL: "/verify-booking",
 };
 
-export const LANGUAGES = {
-    VI: "vi",
-    EN: "en",
-};
-
-export const manageActions = {
-    ADD: "ADD",
-    EDIT: "EDIT",
-    DELETE: "DELETE",
-};
-
-export const dateFormat = {
-    SEND_TO_SERVER: "DD/MM/YYYY",
-};
-
-export const YesNoObj = {
-    YES: "Y",
-    NO: "N",
-};
-
 export const docTitle = {
     ADMIN: {
         dashboard: "Admin | Tổng quan",
@@ -64,4 +44,10 @@ export const USER_AVATAR_URL = `${
 export const IMAGE_LINK = {
     specialty: `${import.meta.env.VITE_BACKEND_URL}/specialty/image`,
     clinic: `${import.meta.env.VITE_BACKEND_URL}/clinic/image`,
+};
+
+export const PAGE_TYPE = {
+    specialty: "specialty",
+    clinic: "clinic",
+    doctor: "doctor",
 };

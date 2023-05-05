@@ -1,14 +1,11 @@
-import { Card } from "flowbite-react";
 import React, { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
 import Slider from "react-slick";
-import medicalImg from "../../assets/images/medical/bv1.jpg";
 import { findAllClinic } from "../../api/clinicService";
 import { Link } from "react-router-dom";
-import { IMAGE_LINK } from "../../utils/constant";
+import { IMAGE_LINK, PAGE_TYPE } from "../../utils/constant";
+import { ArrowRightIcon } from "../../utils/HeroIcon";
 
 function MedicalFacility() {
-    const { t } = useTranslation();
     const settings = {
         dots: true,
         infinite: true,
@@ -29,9 +26,17 @@ function MedicalFacility() {
     return (
         <section className="py-10 bg-gray-100">
             <section className="max-w-screen-xl mx-auto my-3 ">
-                <h1 className="text-3xl font-semibold mb-3">
-                    {t("homepage.hospital.title")}
-                </h1>
+                <div className="flex justify-between items-center mb-5">
+                    <h1 className="text-3xl font-semibold">
+                        Cơ sở y tế nổi bật
+                    </h1>
+                    <Link
+                        to={"/listItem?items=" + PAGE_TYPE.clinic}
+                        className="flex gap-x-1 hover:underline text-blue-700"
+                    >
+                        <span>Xem thêm</span> <ArrowRightIcon />
+                    </Link>
+                </div>
                 <Slider {...settings}>
                     {lstClinics.map((item, index) => (
                         <div

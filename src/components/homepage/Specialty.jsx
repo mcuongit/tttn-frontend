@@ -2,17 +2,15 @@ import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import "./Specialty.css";
 import { Card } from "flowbite-react";
-import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import { getAllSpecs } from "../../api/specialtyService";
 import { useEffect } from "react";
-import { IMAGE_LINK } from "../../utils/constant";
+import { IMAGE_LINK, PAGE_TYPE } from "../../utils/constant";
 import { Link } from "react-router-dom";
+import { ArrowRightIcon } from "../../utils/HeroIcon";
 
 function Specialty() {
-    const { t } = useTranslation();
     const settings = {
         dots: true,
         infinite: true,
@@ -33,9 +31,18 @@ function Specialty() {
     return (
         <section className="py-10">
             <section className="max-w-screen-xl mx-auto my-3 py-3">
-                <h1 className="text-3xl font-semibold mb-3">
-                    {t("homepage.specialty.title")}
-                </h1>
+                <div className="flex justify-between items-center mb-5">
+                    <h1 className="text-3xl font-semibold">
+                        Chuyên khoa phổ biến
+                    </h1>
+                    <Link
+                        to={"/listItem?items=" + PAGE_TYPE.specialty}
+                        className="flex gap-x-1 hover:underline text-blue-700"
+                    >
+                        <span>Xem thêm</span> <ArrowRightIcon />
+                    </Link>
+                </div>
+
                 <Slider {...settings}>
                     {specsList &&
                         specsList.length > 0 &&

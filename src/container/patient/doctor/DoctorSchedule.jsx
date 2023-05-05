@@ -8,6 +8,7 @@ function DoctorSchedule(props) {
     const [availableTime, setAvailableTime] = useState([]);
     const [isShowModal, setIsShowModal] = useState(false);
     const [dataSendModal, setDataSendModal] = useState({});
+    const [exactDate, setExactDate] = useState();
 
     useEffect(() => {
         let a = [];
@@ -38,15 +39,18 @@ function DoctorSchedule(props) {
     }, [daysList]);
 
     const handleDayChange = (e) => {
-        fetchTime(e.target.value);
+        let dateOnly = new Date(e.target.value);
+        dateOnly.setHours(0, 0, 0, 0);
+        dateOnly = dateOnly.getTime();
+        setExactDate(dateOnly);
+        fetchTime(dateOnly);
     };
 
     const fetchTime = (date) => {
         const { doctorId } = props;
-        let dateOnly = new Date(date);
-        dateOnly.setHours(0, 0, 0, 0);
-        getScheduleByDate(`get-by-date/${doctorId}/${dateOnly.getTime()}`)
+        getScheduleByDate(`get-by-date/${doctorId}/${date}`)
             .then((res) => {
+                console.log(res.data);
                 if (res && res.data && res.data.statusCode === 0) {
                     setAvailableTime(res.data.data);
                 }
@@ -57,8 +61,12 @@ function DoctorSchedule(props) {
     };
 
     const handleClickModal = (time) => {
+        const _dataSend = {
+            ...time,
+            exactDate: exactDate,
+        };
         setIsShowModal(true);
-        setDataSendModal(time);
+        setDataSendModal(_dataSend);
     };
 
     const closeModal = () => {

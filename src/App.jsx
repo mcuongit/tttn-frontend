@@ -2,13 +2,7 @@ import "./App.css";
 import { path } from "./utils/constant";
 import LayoutSite from "./container/layout/LayoutSite";
 import HomePage from "./container/pages/HomePage";
-import {
-    BrowserRouter,
-    Navigate,
-    redirect,
-    Route,
-    Routes,
-} from "react-router-dom";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import NotFound from "./components/common/NotFound";
 import RouteAdmin from "./features/admin/RouteAdmin";
 import Login from "./container/pages/Login";
@@ -19,6 +13,7 @@ import VerifyEmail from "./container/patient/VerifyEmail";
 import DetailSpecilaty from "./container/patient/specialty/DetailSpecilaty";
 import DetailClinic from "./container/patient/clinic/DetailClinic";
 import BookingSuccess from "./container/patient/BookingSuccess";
+import ListItem from "./container/pages/ListItem";
 
 function App() {
     const selector = useSelector((state) => state.auth.isLogin);
@@ -48,6 +43,7 @@ function App() {
                             path={"booking/success"}
                             element={<BookingSuccess />}
                         />
+                        <Route path={"listItem"} element={<ListItem />} />
                     </Route>
                     <Route
                         path={`${path.ADMIN}/*`}

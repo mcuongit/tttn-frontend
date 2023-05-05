@@ -47,18 +47,15 @@ function BookingModal(props) {
             if (!validate()) return;
             const { firstName, lastName } = dataSent.userData;
             const doctorName = `${firstName} ${lastName}`;
-            const d = new Date();
-            d.setHours(0, 0, 0, 0);
             const _bookingReq = {
                 ...bookingReq,
-                date: d.getTime(),
+                date: dataSent.exactDate,
                 timeString: `${dataSent.timeTypeData.valueVi} - ${daytime}`,
                 doctorName: doctorName,
             };
             setIsLoading(true);
             createBooking(_bookingReq)
-                .then((res) => {
-                    console.log(res);
+                .then(() => {
                     setIsLoading(false);
                     navigate("/booking/success?email=" + bookingReq.email);
                 })
@@ -227,14 +224,15 @@ function BookingModal(props) {
                     </div>
                 </div>
                 <div className="flex pt-5 gap-x-3">
-                    <Button onClick={handelSubmit}>
-                        {isLoading && (
-                            <div className="mr-3">
-                                <Spinner size="sm" light={true} />
-                            </div>
-                        )}
-                        Xác nhận
-                    </Button>
+                    {isLoading ? (
+                        <Button disabled>
+                            <Spinner className="mr-3" size="sm" light={true} />
+                            Xác nhận
+                        </Button>
+                    ) : (
+                        <Button onClick={handelSubmit}>Xác nhận</Button>
+                    )}
+
                     <Button color="failure" onClick={closeModal}>
                         Đóng
                     </Button>

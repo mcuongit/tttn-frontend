@@ -1,9 +1,10 @@
 import { Avatar, Button, Card } from "flowbite-react";
 import React, { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
 import Slider from "react-slick";
 import { getTopDoctor } from "../../api/homeService";
 import { Link } from "react-router-dom";
+import { ArrowRightIcon } from "../../utils/HeroIcon";
+import { PAGE_TYPE } from "../../utils/constant";
 
 function DoctorPopular() {
     const color = ["gray", "light", "purple", "success", "pink", "gray"];
@@ -28,14 +29,18 @@ function DoctorPopular() {
         arrows: true,
     };
 
-    const { t } = useTranslation();
-
     return (
         <section className="py-10">
             <section className="max-w-screen-xl mx-auto my-3 py-3">
-                <h1 className="text-3xl font-semibold mb-3">
-                    {t("homepage.doctor.title")}
-                </h1>
+                <div className="flex justify-between items-center mb-5">
+                    <h1 className="text-3xl font-semibold">Bác sĩ nổi bật</h1>
+                    <Link
+                        to={"/listItem?items=" + PAGE_TYPE.doctor}
+                        className="flex gap-x-1 hover:underline text-blue-700"
+                    >
+                        <span>Xem thêm</span> <ArrowRightIcon />
+                    </Link>
+                </div>
                 <Slider {...settings}>
                     {doctorsList &&
                         doctorsList.length > 0 &&

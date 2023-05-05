@@ -1,5 +1,4 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
-import languageReducer from "../features/languagesSlice";
 import loginReducer from "../features/admin/slices/loginSlice";
 import userReducer from "../features/admin/slices/userSlice";
 import {
@@ -17,7 +16,6 @@ import storage from "redux-persist/lib/storage";
 // import persistReducer from "redux-persist/es/persistReducer";
 
 const reducer = combineReducers({
-    language: languageReducer,
     auth: loginReducer,
     userAdmin: userReducer,
 });

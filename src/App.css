@@ -12,3 +12,9 @@ body {
 .active {
     background-color: rgba(0, 0, 0, 0.1) !important;
 }
+
+.slick-prev::before,
+.slick-next::before {
+    color: #000 !important;
+    font-size: 24px !important;
+}
