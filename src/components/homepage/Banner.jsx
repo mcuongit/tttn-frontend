@@ -1,4 +1,34 @@
+import { useEffect, useState } from "react";
+import {
+    findAllNotification,
+    findAllNotificationByDate,
+} from "../../api/notificationService";
+import { dateOnly } from "../../utils/functions";
+
 function Banner() {
+    const [notification, setNotification] = useState([]);
+    const [text, setText] = useState("");
+    useEffect(() => {
+        findAllNotification().then((res) => {
+            setNotification(
+                res.data.filter(
+                    (item) =>
+                        new Date(item.to).getTime() >= dateOnly().getTime()
+                )
+            );
+        });
+    }, []);
+    useEffect(() => {
+        if (notification.length > 0) {
+            console.log(notification);
+            let string = "";
+            notification.forEach((element) => {
+                string = `${string} ${element.title}: ${element.content} * `;
+            });
+            setText(string);
+        }
+    }, [notification]);
+
     return (
         <div className="flex flex-col justify-between max-w-screen-2xl mx-auto text-base bg-[url(assets/images/banner/header-bg.jpg)] bg-center bg-no-repeat bg-cover min-h-[600px]">
             <div className="banner-top py-16 bg-gradient-to-b from-[rgba(0,0,0,0.3)] to-transparent">
@@ -21,12 +51,9 @@ function Banner() {
                     <div className="max-w-screen-lg mx-auto">
                         <marquee
                             scrolldelay="60"
-                            className="text-xl font-semibold text-white"
+                            className="text-xl font-semibold text-yellow-200"
                         >
-                            Thông báo: Dịp nghỉ Lễ (từ 29/04 - 03/05) Cường vẫn
-                            hoạt động 24/7 như bình thường, bộ phận hỗ trợ làm
-                            việc từ 7h30 đến 18h00 hàng ngày. Chúc quý khách có
-                            kỳ nghỉ Lễ vui vẻ, khỏe mạnh. Xin cảm ơn!
+                            {text}
                         </marquee>
                     </div>
                 </div>
