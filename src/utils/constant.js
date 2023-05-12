@@ -16,6 +16,8 @@ export const docTitle = {
         add_user: "Admin | Thêm người dùng",
         edit_user: "Admin | Sửa người dùng",
         schedule: "Admin | Lịch khám",
+        schedule: "Admin | Xem lịch khám",
+        schedule_mng: "Admin | Xem lịch khám",
         doctor_manage: "Admin | Quản lý bác sĩ",
         spec_manage: "Admin | Quản lý Chuyên khoa",
         add_spec: "Admin | Thêm chuyên khoa",
@@ -44,10 +46,13 @@ export const USER_AVATAR_URL = `${
 export const IMAGE_LINK = {
     specialty: `${import.meta.env.VITE_BACKEND_URL}/specialty/image`,
     clinic: `${import.meta.env.VITE_BACKEND_URL}/clinic/image`,
+    post: `${import.meta.env.VITE_BACKEND_URL}/post/image`,
 };
 
 export const PAGE_TYPE = {
     specialty: "specialty",
     clinic: "clinic",
     doctor: "doctor",
+    post: "post",
+    category: "post/category",
 };

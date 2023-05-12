@@ -3,8 +3,8 @@ import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { handleLoginService } from "../../api/loginService";
-import { handleLogin } from "../../features/admin/slices/loginSlice";
-import { saveUser } from "../../features/admin/slices/userSlice";
+import { handleLogin } from "../../admin/slices/loginSlice";
+import { saveUser } from "../../admin/slices/userSlice";
 import { path } from "../../utils/constant";
 // import
 

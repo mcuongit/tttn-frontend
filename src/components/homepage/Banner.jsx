@@ -13,14 +13,14 @@ function Banner() {
             setNotification(
                 res.data.filter(
                     (item) =>
-                        new Date(item.to).getTime() >= dateOnly().getTime()
+                        new Date(item.to).getTime() >= dateOnly().getTime() &&
+                        new Date(item.from).getTime() <= dateOnly().getTime()
                 )
             );
         });
     }, []);
     useEffect(() => {
         if (notification.length > 0) {
-            console.log(notification);
             let string = "";
             notification.forEach((element) => {
                 string = `${string} ${element.title}: ${element.content} * `;

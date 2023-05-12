@@ -4,7 +4,7 @@ import LayoutSite from "./container/layout/LayoutSite";
 import HomePage from "./container/pages/HomePage";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import NotFound from "./components/common/NotFound";
-import RouteAdmin from "./features/admin/RouteAdmin";
+import RouteAdmin from "./admin/RouteAdmin";
 import Login from "./container/pages/Login";
 import { Suspense } from "react";
 import { useSelector } from "react-redux";
@@ -14,6 +14,9 @@ import DetailSpecilaty from "./container/patient/specialty/DetailSpecilaty";
 import DetailClinic from "./container/patient/clinic/DetailClinic";
 import BookingSuccess from "./container/patient/BookingSuccess";
 import ListItem from "./container/pages/ListItem";
+import Category from "./container/patient/category/Category";
+import Post from "./container/patient/post/Post";
+import PostDetail from "./container/patient/post/PostDetail";
 
 function App() {
     const selector = useSelector((state) => state.auth.isLogin);
@@ -44,6 +47,11 @@ function App() {
                             element={<BookingSuccess />}
                         />
                         <Route path={"listItem"} element={<ListItem />} />
+                        <Route
+                            path={"post-detail/:id"}
+                            element={<PostDetail />}
+                        />
+                        <Route path={"post/category"} element={<Category />} />
                     </Route>
                     <Route
                         path={`${path.ADMIN}/*`}

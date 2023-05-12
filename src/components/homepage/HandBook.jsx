@@ -1,41 +1,52 @@
-import { Card } from "flowbite-react";
-import React from "react";
-import Slider from "react-slick";
+import React, { useState } from "react";
+import { IMAGE_LINK, PAGE_TYPE } from "../../utils/constant";
+import { Link } from "react-router-dom";
+import { ArrowRightIcon } from "../../utils/HeroIcon";
+import { useEffect } from "react";
+import { findPostLimit } from "../../api/postService";
 
 function HandBook() {
-    const s = [1, 2, 3, 4, 5, 6, 7, 8];
-    const settings = {
-        dots: true,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 3,
-        slidesToScroll: 1,
-        arrows: true,
-    };
+    const [lstPost, setLstPost] = useState([]);
+    useEffect(() => {
+        findPostLimit().then((res) => {
+            setLstPost(res.data);
+        });
+    }, []);
 
     return (
         <section className="py-10 bg-gray-100">
             <section className="max-w-screen-xl mx-auto my-3 ">
-                <h1 className="text-3xl font-semibold mb-3">Cẩm nang</h1>
-                <Slider {...settings}>
-                    {s.map((item, index) => (
-                        <div key={index} className="max-w-md px-2">
-                            <Card
-                                horizontal={true}
-                                imgSrc="https://flowbite.com/docs/images/blog/image-4.jpg"
+                <div className="flex justify-between items-center mb-5">
+                    <h1 className="text-3xl font-semibold">Cẩm nang</h1>
+                    <Link
+                        to={PAGE_TYPE.category}
+                        className="flex gap-x-1 hover:underline text-blue-700"
+                    >
+                        <span>Xem thêm</span> <ArrowRightIcon />
+                    </Link>
+                </div>
+                <div className="grid grid-cols-3 gap-3">
+                    {lstPost.length > 0 &&
+                        lstPost.map((item, index) => (
+                            <Link
+                                to={"post-detail/" + item.id}
+                                key={index}
+                                className="block rounded-lg shadow-md p-5 bg-white hover:opacity-80 transition-all"
                             >
-                                <h5 className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
-                                    Noteworthy technology acquisitions 2021
+                                <img
+                                    src={IMAGE_LINK.post + "/" + item.image}
+                                    alt={item.image}
+                                    className="w-full h-auto mb-3"
+                                />
+                                <h5
+                                    style={{ lineClamp: 1 }}
+                                    className="text-2xl font-bold tracking-tight text-gray-900 mt-3 hover:underline"
+                                >
+                                    {item.title}
                                 </h5>
-                                <p className="font-normal text-gray-700 dark:text-gray-400">
-                                    Here are the biggest enterprise technology
-                                    acquisitions of 2021 so far, in reverse
-                                    chronological order.
-                                </p>
-                            </Card>
-                        </div>
-                    ))}
-                </Slider>
+                            </Link>
+                        ))}
+                </div>
             </section>
         </section>
     );
