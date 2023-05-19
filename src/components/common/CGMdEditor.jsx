@@ -9,6 +9,7 @@ function CGMdEditor(props) {
             style={{ height: "500px", marginTop: 8 }}
             renderHTML={(text) => mdParser.render(text)}
             onChange={handleEditorChange}
+            value={markdown}
         />
     );
 }

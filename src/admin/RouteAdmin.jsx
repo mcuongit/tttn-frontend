@@ -19,6 +19,7 @@ import AllCategory from "./category/AllCategory";
 import AddCategory from "./category/AddCategory";
 import AllPost from "./post/AllPost";
 import AddPost from "./post/AddPost";
+import EditPost from "./post/EditPost";
 
 function RouteAdmin() {
     return (
@@ -57,6 +58,7 @@ function RouteAdmin() {
                 {/* post */}
                 <Route path="post" element={<AllPost />} />
                 <Route path="post/add" element={<AddPost />} />
+                <Route path="post/edit/:id" element={<EditPost />} />
             </Route>
             <Route path="*" element={<NotFound />} />
         </Routes>

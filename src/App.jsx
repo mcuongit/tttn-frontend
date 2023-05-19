@@ -17,55 +17,69 @@ import ListItem from "./container/pages/ListItem";
 import Category from "./container/patient/category/Category";
 import Post from "./container/patient/post/Post";
 import PostDetail from "./container/patient/post/PostDetail";
+import ScrollToTop from "./components/common/ScrollToTop";
+import CategoryDetail from "./container/patient/category/CategoryDetail";
+import About from "./container/pages/About";
 
 function App() {
     const selector = useSelector((state) => state.auth.isLogin);
     return (
         <Suspense fallback={null}>
             <BrowserRouter>
-                <Routes>
-                    <Route path={path.HOME} element={<LayoutSite />}>
-                        <Route index element={<HomePage />} />
+                <ScrollToTop>
+                    <Routes>
+                        <Route path={path.HOME} element={<LayoutSite />}>
+                            <Route index element={<HomePage />} />
+                            <Route
+                                path={path.DETAIL_DOCTOR}
+                                element={<DetailDoctor />}
+                            />
+                            <Route
+                                path={path.DETAIL_SPECIALTY}
+                                element={<DetailSpecilaty />}
+                            />
+                            <Route
+                                path={path.DETAIL_CLINIC}
+                                element={<DetailClinic />}
+                            />
+                            <Route
+                                path={path.VERIFY_EMAIL}
+                                element={<VerifyEmail />}
+                            />
+                            <Route
+                                path={"booking/success"}
+                                element={<BookingSuccess />}
+                            />
+                            <Route path={"listItem"} element={<ListItem />} />
+                            <Route
+                                path={"post-detail/:id"}
+                                element={<PostDetail />}
+                            />
+                            <Route
+                                path={"post/category"}
+                                element={<Category />}
+                            />
+                            <Route path={"post"} element={<Post />} />
+                            <Route
+                                path={"post/cat/:slug"}
+                                element={<CategoryDetail />}
+                            />
+                            <Route path={"about"} element={<About />} />
+                        </Route>
                         <Route
-                            path={path.DETAIL_DOCTOR}
-                            element={<DetailDoctor />}
+                            path={`${path.ADMIN}/*`}
+                            element={
+                                selector ? (
+                                    <RouteAdmin />
+                                ) : (
+                                    <Navigate to={path.LOGIN} replace={true} />
+                                )
+                            }
                         />
-                        <Route
-                            path={path.DETAIL_SPECIALTY}
-                            element={<DetailSpecilaty />}
-                        />
-                        <Route
-                            path={path.DETAIL_CLINIC}
-                            element={<DetailClinic />}
-                        />
-                        <Route
-                            path={path.VERIFY_EMAIL}
-                            element={<VerifyEmail />}
-                        />
-                        <Route
-                            path={"booking/success"}
-                            element={<BookingSuccess />}
-                        />
-                        <Route path={"listItem"} element={<ListItem />} />
-                        <Route
-                            path={"post-detail/:id"}
-                            element={<PostDetail />}
-                        />
-                        <Route path={"post/category"} element={<Category />} />
-                    </Route>
-                    <Route
-                        path={`${path.ADMIN}/*`}
-                        element={
-                            selector ? (
-                                <RouteAdmin />
-                            ) : (
-                                <Navigate to={path.LOGIN} replace={true} />
-                            )
-                        }
-                    />
-                    <Route path={path.LOGIN} element={<Login />} />
-                    <Route path="*" element={<NotFound />} />
-                </Routes>
+                        <Route path={path.LOGIN} element={<Login />} />
+                        <Route path="*" element={<NotFound />} />
+                    </Routes>
+                </ScrollToTop>
             </BrowserRouter>
         </Suspense>
     );

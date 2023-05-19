@@ -15,6 +15,10 @@ export const findAllCategory = () => {
     return axios.get(url);
 };
 
+export const findCatLimit = (limit = 6) => {
+    return axios.get(`${url}/findLimit/${limit}`);
+};
+
 export const findOneCategory = (id) => {
     return axios.get(`${url}/${id}`);
 };

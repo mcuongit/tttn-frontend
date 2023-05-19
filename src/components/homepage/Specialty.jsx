@@ -2,15 +2,16 @@ import React from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { Card } from "flowbite-react";
+import { Button, Card } from "flowbite-react";
 import { useState } from "react";
 import { getAllSpecs } from "../../api/specialtyService";
 import { useEffect } from "react";
 import { IMAGE_LINK, PAGE_TYPE } from "../../utils/constant";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ArrowRightIcon } from "../../utils/HeroIcon";
 
 function Specialty() {
+    const navi = useNavigate();
     const settings = {
         dots: true,
         infinite: true,
@@ -35,12 +36,16 @@ function Specialty() {
                     <h1 className="text-3xl font-semibold">
                         Chuyên khoa phổ biến
                     </h1>
-                    <Link
-                        to={"/listItem?items=" + PAGE_TYPE.specialty}
-                        className="flex gap-x-1 hover:underline text-blue-700"
+                    <Button
+                        onClick={() =>
+                            navi("/listItem?items=" + PAGE_TYPE.specialty)
+                        }
+                        size={"sm"}
+                        color="gray"
                     >
-                        <span>Xem thêm</span> <ArrowRightIcon />
-                    </Link>
+                        <span className="mr-1">Xem thêm</span>{" "}
+                        <ArrowRightIcon />
+                    </Button>
                 </div>
 
                 <Slider {...settings}>

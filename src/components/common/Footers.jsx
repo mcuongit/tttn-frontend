@@ -42,10 +42,13 @@ function Footers() {
                                 <div>
                                     <Footer.Title title="theo dõi" />
                                     <Footer.LinkGroup col={true}>
-                                        <Footer.Link href="#">
+                                        <Footer.Link
+                                            href="https://www.facebook.com/rua.cuongmn/"
+                                            target="_blank"
+                                        >
                                             Facebook
                                         </Footer.Link>
-                                        <Footer.Link href="#">
+                                        <Footer.Link href="/">
                                             Instagram
                                         </Footer.Link>
                                     </Footer.LinkGroup>

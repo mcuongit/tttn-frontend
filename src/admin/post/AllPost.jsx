@@ -1,8 +1,9 @@
-import { Button, Table } from "flowbite-react";
+import { Avatar, Button, Table } from "flowbite-react";
 import { useState } from "react";
 import { useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { findAllPost, removePost } from "../../api/postService";
+import { IMAGE_LINK } from "../../utils/constant";
 
 function AllPost() {
     const navigate = useNavigate();
@@ -34,8 +35,10 @@ function AllPost() {
             <Table>
                 <Table.Head>
                     <Table.HeadCell>ID</Table.HeadCell>
+                    <Table.HeadCell>hình ảnh</Table.HeadCell>
                     <Table.HeadCell>Tiêu đề bài viết</Table.HeadCell>
                     <Table.HeadCell>Nội dung</Table.HeadCell>
+                    <Table.HeadCell>Danh mục</Table.HeadCell>
                     <Table.HeadCell>Hành động</Table.HeadCell>
                 </Table.Head>
                 <Table.Body className="divide-y">
@@ -47,15 +50,29 @@ function AllPost() {
                                     key={item.id}
                                 >
                                     <Table.Cell>{item.id}</Table.Cell>
+                                    <Table.Cell>
+                                        <Avatar
+                                            img={
+                                                item.image
+                                                    ? `${IMAGE_LINK.post}/${item.image}`
+                                                    : ""
+                                            }
+                                            size={"md"}
+                                        />
+                                    </Table.Cell>
                                     <Table.Cell>{item.title}</Table.Cell>
 
                                     <Table.Cell className="max-w-sm truncate">
                                         {item.markdown}
                                     </Table.Cell>
+                                    <Table.Cell className="max-w-sm truncate">
+                                        {item.categoryData &&
+                                            item.categoryData.name}
+                                    </Table.Cell>
                                     <Table.Cell>
                                         <div className="flex gap-x-5">
                                             <Link
-                                                to={`/admin/category/edit/${item.id}`}
+                                                to={`/admin/post/edit/${item.id}`}
                                                 className="font-medium text-blue-600 hover:underline"
                                             >
                                                 Sửa

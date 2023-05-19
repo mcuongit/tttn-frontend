@@ -29,3 +29,7 @@ export const uploadPostImg = (data) => {
 export const findPostLimit = (limit = 3) => {
     return axios.get(`${url}/get-post/${limit}`);
 };
+
+export const findPostByCatSlug = (slug) => {
+    return axios.get(`${url}/findByCatSlug/${slug}`);
+};

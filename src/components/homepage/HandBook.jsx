@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { IMAGE_LINK, PAGE_TYPE } from "../../utils/constant";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ArrowRightIcon } from "../../utils/HeroIcon";
 import { useEffect } from "react";
 import { findPostLimit } from "../../api/postService";
+import { Button } from "flowbite-react";
 
 function HandBook() {
     const [lstPost, setLstPost] = useState([]);
@@ -12,18 +13,21 @@ function HandBook() {
             setLstPost(res.data);
         });
     }, []);
+    const navi = useNavigate();
 
     return (
         <section className="py-10 bg-gray-100">
             <section className="max-w-screen-xl mx-auto my-3 ">
                 <div className="flex justify-between items-center mb-5">
                     <h1 className="text-3xl font-semibold">Cẩm nang</h1>
-                    <Link
-                        to={PAGE_TYPE.category}
-                        className="flex gap-x-1 hover:underline text-blue-700"
+                    <Button
+                        onClick={() => navi(PAGE_TYPE.post)}
+                        size={"sm"}
+                        color="gray"
                     >
-                        <span>Xem thêm</span> <ArrowRightIcon />
-                    </Link>
+                        <span className="mr-1">Tất cả bài viết</span>{" "}
+                        <ArrowRightIcon />
+                    </Button>
                 </div>
                 <div className="grid grid-cols-3 gap-3">
                     {lstPost.length > 0 &&

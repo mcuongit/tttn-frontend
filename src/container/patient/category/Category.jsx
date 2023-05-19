@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { LETTER } from "../../../utils/functions";
 import React, { useState } from "react";
 import { findAllCategory } from "../../../api/categoryService";
+import { Link } from "react-router-dom";
 
 function Category() {
     const crumbs = [
@@ -91,13 +92,13 @@ function Category() {
                                 {categories.map((row) => {
                                     if (row.firstLetter === item)
                                         return (
-                                            <a
-                                                href="#"
+                                            <Link
+                                                to={"/post/cat/" + row.slug}
                                                 className="border p-1 rounded bg-gray-50"
                                                 key={row.id}
                                             >
                                                 {row.name}
-                                            </a>
+                                            </Link>
                                         );
                                 })}
                             </div>

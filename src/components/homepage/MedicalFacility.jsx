@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
 import { findAllClinic } from "../../api/clinicService";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { IMAGE_LINK, PAGE_TYPE } from "../../utils/constant";
 import { ArrowRightIcon } from "../../utils/HeroIcon";
+import { Button } from "flowbite-react";
 
 function MedicalFacility() {
     const settings = {
@@ -22,6 +23,7 @@ function MedicalFacility() {
             }
         });
     }, []);
+    const navi = useNavigate();
 
     return (
         <section className="py-10 bg-gray-100">
@@ -30,12 +32,16 @@ function MedicalFacility() {
                     <h1 className="text-3xl font-semibold">
                         Cơ sở y tế nổi bật
                     </h1>
-                    <Link
-                        to={"/listItem?items=" + PAGE_TYPE.clinic}
-                        className="flex gap-x-1 hover:underline text-blue-700"
+                    <Button
+                        onClick={() =>
+                            navi("/listItem?items=" + PAGE_TYPE.clinic)
+                        }
+                        size={"sm"}
+                        color="gray"
                     >
-                        <span>Xem thêm</span> <ArrowRightIcon />
-                    </Link>
+                        <span className="mr-1">Xem thêm</span>{" "}
+                        <ArrowRightIcon />
+                    </Button>
                 </div>
                 <Slider {...settings}>
                     {lstClinics.map((item, index) => (

@@ -25,7 +25,7 @@ function Header() {
         {
             name: "Giới thiệu",
             desc: "Tổng quan website",
-            link: `/listItem?items=${PAGE_TYPE.doctor}`,
+            link: `/about`,
         },
     ];
     return (
