@@ -1,6 +1,4 @@
 import React, { useEffect } from "react";
-import Footers from "../../components/common/Footers";
-import Header from "../../components/common/Header";
 import About from "../../components/homepage/About";
 import Banner from "../../components/homepage/Banner";
 import DoctorPopular from "../../components/homepage/DoctorPopular";
@@ -10,20 +8,20 @@ import Specialty from "../../components/homepage/Specialty";
 import { docTitle } from "../../utils/constant";
 
 function HomePage() {
-    useEffect(() => {
-        const { home } = docTitle.USER;
-        document.title = home;
-    }, []);
-    return (
-        <>
-            <Banner />
-            <Specialty />
-            <MedicalFacility />
-            <DoctorPopular />
-            <HandBook />
-            <About />
-        </>
-    );
+  useEffect(() => {
+    const { home } = docTitle.USER;
+    document.title = home;
+  }, []);
+  return (
+    <>
+      <Banner />
+      <Specialty />
+      <MedicalFacility />
+      <DoctorPopular />
+      <HandBook />
+      <About />
+    </>
+  );
 }
 
 export default HomePage;

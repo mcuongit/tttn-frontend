@@ -22,47 +22,38 @@ import AddPost from "./post/AddPost";
 import EditPost from "./post/EditPost";
 
 function RouteAdmin() {
-    return (
-        <Routes>
-            <Route element={<LayoutAdmin />}>
-                <Route index element={<DashBoard />} />
-                <Route path={"users/*"} element={<UsersRoutes />} />
-                {/* schedule */}
-                <Route path={"schedule"} element={<DoctorSchedule />} />
-                <Route path={"schedule/manage"} element={<AllSchedule />} />
-                {/* specialty */}
-                <Route path={"specialty"} element={<ManageSpecialty />} />
-                <Route path={"specialty/add"} element={<SpecialtyAdd />} />
-                <Route
-                    path={"specialty/edit/:id"}
-                    element={<SpecialtyEdit />}
-                />
-                {/* clinic */}
-                <Route path={"clinic"} element={<ManageClinic />} />
-                <Route path={"clinic/add"} element={<ClinicAdd />} />
-                <Route path={"clinic/edit/:id"} element={<ClinicEdit />} />
-                <Route path={"patient"} element={<PatientBooking />} />
-                {/* notification */}
-                <Route path={"notification"} element={<AllNotification />} />
-                <Route
-                    path={"notification/add"}
-                    element={<AddNotification />}
-                />
-                <Route
-                    path={"notification/edit/:id"}
-                    element={<EditNotification />}
-                />
-                {/* category */}
-                <Route path="category" element={<AllCategory />} />
-                <Route path="category/add" element={<AddCategory />} />
-                {/* post */}
-                <Route path="post" element={<AllPost />} />
-                <Route path="post/add" element={<AddPost />} />
-                <Route path="post/edit/:id" element={<EditPost />} />
-            </Route>
-            <Route path="*" element={<NotFound />} />
-        </Routes>
-    );
+  return (
+    <Routes>
+      <Route element={<LayoutAdmin />}>
+        <Route index element={<DashBoard />} />
+        <Route path={"users/*"} element={<UsersRoutes />} />
+        {/* schedule */}
+        <Route path={"schedule"} element={<DoctorSchedule />} />
+        <Route path={"schedule/manage"} element={<AllSchedule />} />
+        {/* specialty */}
+        <Route path={"specialty"} element={<ManageSpecialty />} />
+        <Route path={"specialty/add"} element={<SpecialtyAdd />} />
+        <Route path={"specialty/edit/:id"} element={<SpecialtyEdit />} />
+        {/* clinic */}
+        <Route path={"clinic"} element={<ManageClinic />} />
+        <Route path={"clinic/add"} element={<ClinicAdd />} />
+        <Route path={"clinic/edit/:id"} element={<ClinicEdit />} />
+        <Route path={"patient"} element={<PatientBooking />} />
+        {/* notification */}
+        <Route path={"notification"} element={<AllNotification />} />
+        <Route path={"notification/add"} element={<AddNotification />} />
+        <Route path={"notification/edit/:id"} element={<EditNotification />} />
+        {/* category */}
+        <Route path="category" element={<AllCategory />} />
+        <Route path="category/add" element={<AddCategory />} />
+        {/* post */}
+        <Route path="post" element={<AllPost />} />
+        <Route path="post/add" element={<AddPost />} />
+        <Route path="post/edit/:id" element={<EditPost />} />
+      </Route>
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+  );
 }
 
 export default RouteAdmin;
