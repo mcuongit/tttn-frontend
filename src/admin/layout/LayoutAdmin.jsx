@@ -1,7 +1,7 @@
 import { Avatar, Dropdown, Sidebar, TextInput } from "flowbite-react";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Outlet, NavLink, Link, useNavigate } from "react-router-dom";
+import { Outlet, NavLink, Link } from "react-router-dom";
 import { USER_ROLE, path } from "../../utils/constant";
 import { menuAdmin, menuDoctor } from "./menuContant.jsx";
 import { useGetUserDetailsQuery } from "../../app/service/authService";
@@ -9,7 +9,6 @@ import { logout, setCredentials } from "../../features/auth/authSlice";
 import _ from "lodash";
 
 function LayoutAdmin() {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const { userInfo } = useSelector((state) => state.auth);
   // automatically authenticate user if token is found
@@ -139,7 +138,7 @@ function LayoutAdmin() {
       </nav>
       <aside
         id="logo-sidebar"
-        className="fixed top-0 left-0 z-40 w-64 h-screen pt-14 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0"
+        className="fixed top-0 left-0 z-40 w-64 h-screen pt-14 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 overflow-y-auto"
       >
         <div className="w-fit border-r border-gray-200">
           <Sidebar aria-label="Default sidebar example">
@@ -182,30 +181,12 @@ function LayoutAdmin() {
         </div>
       </aside>
       <div className="p-4 sm:ml-64">
-        <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg mt-14">
+        <div className="p-4 mt-14">
           <Outlet />
         </div>
       </div>
     </div>
   );
 }
-
-const AdminIcon = () => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="-40 -40 80 80"
-      className="h-8 w-8"
-    >
-      <circle r="39" />
-      <path
-        fill="#fff"
-        d="M0,38a38,38 0 0 1 0,-76a19,19 0 0 1 0,38a19,19 0 0 0 0,38"
-      />
-      <circle r="5" cy="19" fill="#fff" />
-      <circle r="5" cy="-19" />
-    </svg>
-  );
-};
 
 export default LayoutAdmin;

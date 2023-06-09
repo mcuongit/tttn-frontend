@@ -31,7 +31,7 @@ export const registerUser = createAsyncThunk(
 
 export const userLogin = createAsyncThunk(
   "auth/login",
-  async ({ email, password }, { WithValue }) => {
+  async ({ email, password }, { rejectWithValue }) => {
     try {
       // configure header's Content-Type as JSON
       const config = {

@@ -20,6 +20,8 @@ import AddCategory from "./category/AddCategory";
 import AllPost from "./post/AllPost";
 import AddPost from "./post/AddPost";
 import EditPost from "./post/EditPost";
+import AllContact from "./contact/AllContact";
+import ReplyContact from "./contact/ReplyContact";
 
 function RouteAdmin() {
   return (
@@ -50,6 +52,9 @@ function RouteAdmin() {
         <Route path="post" element={<AllPost />} />
         <Route path="post/add" element={<AddPost />} />
         <Route path="post/edit/:id" element={<EditPost />} />
+        {/* contact */}
+        <Route path="contact" element={<AllContact />} />
+        <Route path="contact/reply/:id" element={<ReplyContact />} />
       </Route>
       <Route path="*" element={<NotFound />} />
     </Routes>

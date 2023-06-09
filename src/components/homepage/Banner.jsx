@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import {
-  findAllNotification,
-  findAllNotificationByDate,
-} from "../../api/notificationService";
+import { findAllNotification } from "../../api/notificationService";
 import { dateOnly } from "../../utils/functions";
+import { useNavigate } from "react-router-dom";
 
 function Banner() {
   const [notification, setNotification] = useState([]);
   const [text, setText] = useState("");
+  const [query, setQuery] = useState("");
+  const navi = useNavigate();
   useEffect(() => {
     findAllNotification().then((res) => {
       setNotification(
@@ -25,9 +25,15 @@ function Banner() {
       notification.forEach((element) => {
         string = `${string} ${element.title}: ${element.content} * `;
       });
+      string = string.slice(0, -2);
       setText(string);
     }
   }, [notification]);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (query === "") return;
+    navi("/search/" + query);
+  };
 
   return (
     <div className="flex flex-col justify-between max-w-screen-xl mx-auto text-base bg-[url(assets/images/banner/header-bg.jpg)] bg-center bg-no-repeat bg-cover min-h-[600px]">
@@ -39,11 +45,14 @@ function Banner() {
           </h1>
         </div>
         <div className="flex justify-center items-center py-3 mt-4">
-          <input
-            className="bg-yellow-400 py-3 px-8 rounded-full placeholder:text-sm placeholder:text-black outline-none md:w-[400px]"
-            type="search"
-            placeholder="Tìm bác sĩ"
-          />
+          <form method="get" onSubmit={handleSubmit}>
+            <input
+              className="bg-[rgba(255,255,255,0.5)] backdrop-blur py-3 px-8 rounded-full placeholder:text-sm border-none md:w-[400px]"
+              type="search"
+              placeholder="Tìm bác sĩ..."
+              onChange={(e) => setQuery(e.target.value)}
+            />
+          </form>
         </div>
       </div>
       <div>

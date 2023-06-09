@@ -21,6 +21,9 @@ import CategoryDetail from "./container/patient/category/CategoryDetail";
 import About from "./container/pages/About";
 import PrivateRoute from "./admin/PrivateRoute";
 import { history } from "./utils/history";
+import Tracking from "./container/pages/Tracking";
+import Search from "./container/pages/Search";
+import Contact from "./container/pages/Contact";
 
 function App() {
   history.navigate = useNavigate();
@@ -43,6 +46,9 @@ function App() {
             <Route path={"post"} element={<Post />} />
             <Route path={"post/cat/:slug"} element={<CategoryDetail />} />
             <Route path={"about"} element={<About />} />
+            <Route path={"tracking"} element={<Tracking />} />
+            <Route path={"search/:query"} element={<Search />} />
+            <Route path={"contact"} element={<Contact />} />
           </Route>
           <Route element={<PrivateRoute />}>
             <Route path={`${path.ADMIN}/*`} element={<RouteAdmin />} />

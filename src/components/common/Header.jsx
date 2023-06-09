@@ -2,7 +2,8 @@ import React from "react";
 import { MenuIcon } from "../../utils/HeroIcon";
 import { PAGE_TYPE, path } from "../../utils/constant";
 import { Link } from "react-router-dom";
-import { IconHelp } from "@tabler/icons-react";
+import { IconHelp, IconX } from "@tabler/icons-react";
+import { useState } from "react";
 
 function Header() {
   const menu = [
@@ -27,48 +28,111 @@ function Header() {
       link: `/about`,
     },
   ];
+  const [classList, setClassList] = useState({
+    backdrop: "hidden",
+    sidebar: "-translate-x-80",
+  });
+  const handleSidebar = () => {
+    setClassList({
+      backdrop: "block",
+      sidebar: "translate-x-0",
+    });
+  };
+  const handleClose = () => {
+    setClassList({ backdrop: "hidden", sidebar: "-translate-x-80" });
+  };
+  const megaMenu = [
+    ...menu,
+    { name: "Cẩm nang", link: "/post" },
+    { name: "Danh mục cẩm nang", link: "/post/category" },
+    { name: "Liên hệ chúng tôi", link: "/contact" },
+  ];
   return (
-    <header className="bg-white">
-      <div className="container max-w-screen-lg mx-auto text-base">
-        <div className="flex flex-row items-center py-4 justify-start">
-          <div className="basis-3/12 flex flex-row items-center gap-x-2">
-            <MenuIcon />
-            <Link to={path.HOME}>
+    <>
+      <div>
+        <div
+          className={`z-50 fixed left-0 top-0 bottom-0 py-3 px-5 bg-[rgba(255,255,255,0.8)] backdrop-blur w-80 ${classList.sidebar} transition-all duration-500`}
+        >
+          <div className="flex justify-between items-center py-3">
+            <Link to={path.HOME} onClick={handleClose}>
               <img
                 src="/logo.png"
                 alt="logo"
-                className="w-44 pointer-events-none"
+                className="w-40 pointer-events-none"
               />
             </Link>
+            <button onClick={handleClose}>
+              <IconX />
+            </button>
           </div>
-          <nav className="basis-7/12">
-            <ul className="flex flex-row justify-around text-sm items-center">
-              {menu.map((item, index) => {
-                return (
-                  <li key={index}>
-                    <Link to={item.link}>
-                      <div className="font-semibold">{item.name}</div>
-                      <small>{item.desc}</small>
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
-          </nav>
-          <div className="basis-2/12 flex items-center justify-around">
-            <div className="flex flex-col items-end text-gray-500 font-semibold">
-              <a href="/" className="flex items-center">
-                <IconHelp />
-                <span className="text-xs">Hỗ trợ</span>
-              </a>
-              <a className="text-xs" href="tel:0865957964">
-                0865957964
-              </a>
+          <ul>
+            {megaMenu.map((item, index) => {
+              return (
+                <li
+                  key={index}
+                  className="py-3 text-lg transition-all duration-300 hover:translate-x-2"
+                >
+                  <Link
+                    className="font-medium tracking-tight text-gray-900 hover:text-blue-600 transition-all duration-300"
+                    onClick={handleClose}
+                    to={item.link}
+                  >
+                    {item.name}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </div>
+        <div
+          className={`bg-[rgba(0,0,0,0.5)] fixed top-0 left-0 right-0 bottom-0 z-[49] ${classList.backdrop}`}
+          onClick={handleClose}
+        ></div>
+      </div>
+      <header className="bg-[rgba(255,255,255,0.8)] backdrop-blur fixed top-0 w-screen z-40">
+        <div className="container max-w-screen-lg mx-auto text-base">
+          <div className="flex flex-row items-center justify-start">
+            <div className="basis-3/12 flex flex-row items-center gap-x-2">
+              <button onClick={handleSidebar}>
+                <MenuIcon />
+              </button>
+              <Link to={path.HOME}>
+                <img
+                  src="/logo.png"
+                  alt="logo"
+                  className="w-40 pointer-events-none"
+                />
+              </Link>
+            </div>
+            <nav className="basis-7/12">
+              <ul className="flex flex-row justify-around text-sm items-center">
+                {menu.map((item, index) => {
+                  return (
+                    <li key={index}>
+                      <Link to={item.link}>
+                        <div className="font-semibold">{item.name}</div>
+                        <small>{item.desc}</small>
+                      </Link>
+                    </li>
+                  );
+                })}
+              </ul>
+            </nav>
+            <div className="basis-2/12 flex items-center justify-around">
+              <div className="flex flex-col items-end text-gray-500 font-semibold">
+                <a href="/" className="flex items-center">
+                  <IconHelp />
+                  <span className="text-xs">Hỗ trợ</span>
+                </a>
+                <a className="text-xs" href="tel:0865957964">
+                  0865957964
+                </a>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-    </header>
+      </header>
+    </>
   );
 }
 

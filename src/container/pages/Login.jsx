@@ -32,7 +32,7 @@ function Login() {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (!form.current.checkValidity()) {
       if (!user.email) {
@@ -46,9 +46,25 @@ function Login() {
         setPwdValid(true);
       }
       return;
+    } else {
+      setEmailValid(true);
+      setPwdValid(true);
     }
-    dispatch(userLogin({ email: user.email, password: user.password }));
+    const res = await dispatch(
+      userLogin({ email: user.email, password: user.password })
+    );
+    if (res && res.error.message === "Rejected") {
+      console.log(res.payload);
+      setResponse({
+        res: true,
+        msg: res.payload,
+      });
+    }
   };
+
+  useEffect(() => {
+    document.title = "Đăng nhập";
+  }, []);
 
   useEffect(() => {
     if (!_.isEmpty(userInfo)) navigate(path.ADMIN);
@@ -56,8 +72,8 @@ function Login() {
 
   return (
     <>
-      <main className="bg-gray-50">
-        <div className="flex flex-col items-center justify-center px-6 pt-8 mx-auto md:h-screen pt:mt-0">
+      <main className="bg-[url('src/assets/images/login/2.jpg')] bg-center bg-cover bg-fixed bg-no-repeat h-screen">
+        <div className="flex flex-col items-center justify-center h-full">
           <Link
             to={path.ADMIN}
             className="flex gap-x-3 items-center justify-center mb-3 text-3xl font-semibold"
@@ -66,7 +82,7 @@ function Login() {
             <span>Quản trị</span>
           </Link>
           {/* Card */}
-          <div className="w-full max-w-xl p-6 space-y-8 sm:p-8 bg-white rounded-lg shadow">
+          <div className="w-full max-w-xl p-6 space-y-8 sm:p-8 backdrop-blur bg-[rgba(255,255,255,0.5)] rounded-lg shadow">
             <h2 className="text-2xl font-bold text-gray-900">
               Đăng nhập vào nền tảng
             </h2>
@@ -138,7 +154,7 @@ function Login() {
                 </a>
               </div>
               {response.res && (
-                <Alert color="failure">
+                <Alert color="failure" className="border border-red-600">
                   <span>{response.msg}</span>
                 </Alert>
               )}

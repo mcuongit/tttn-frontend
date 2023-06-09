@@ -6,6 +6,7 @@ import {
   BsInstagram,
   BsTwitter,
 } from "../../utils/HeroIcon";
+import { Link } from "react-router-dom";
 
 function Footers() {
   return (
@@ -18,7 +19,7 @@ function Footers() {
               <div className="flex gap-x-3">
                 <Footer.Brand
                   href="/"
-                  src={yinyang}
+                  src="/only_logo.png"
                   alt="CuongStore"
                   name="gitech"
                 />
@@ -27,8 +28,12 @@ function Footers() {
                 <div>
                   <Footer.Title title="về chúng tôi" />
                   <Footer.LinkGroup col={true}>
-                    <Footer.Link href="#">Giới thiệu</Footer.Link>
-                    <Footer.Link href="#">Thông tin website</Footer.Link>
+                    <Footer.Link as={Link} to="/about">
+                      Giới thiệu
+                    </Footer.Link>
+                    <Footer.Link as={Link} to="/contact">
+                      Liên hệ
+                    </Footer.Link>
                   </Footer.LinkGroup>
                 </div>
                 <div>

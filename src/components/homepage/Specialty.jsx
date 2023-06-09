@@ -31,7 +31,7 @@ function Specialty() {
 
   return (
     <section className="py-10">
-      <section className="max-w-screen-lg mx-auto my-3 py-3">
+      <section className="max-w-screen-lg mx-auto">
         <div className="flex justify-between items-center mb-5">
           <h1 className="text-3xl font-semibold">Chuyên khoa phổ biến</h1>
           <Button
