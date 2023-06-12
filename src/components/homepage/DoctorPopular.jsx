@@ -1,46 +1,41 @@
 import { Avatar, Button, Card } from "flowbite-react";
 import React, { useEffect, useState } from "react";
 import Slider from "react-slick";
-import { getTopDoctor } from "../../api/homeService";
+import { getTopDoctor, getTopDoctorEdit } from "../../api/homeService";
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowRightIcon } from "../../utils/HeroIcon";
-import { PAGE_TYPE } from "../../utils/constant";
+import { PAGE_TYPE, settings } from "../../utils/constant";
 
 function DoctorPopular() {
   const color = ["gray", "light", "purple", "success", "pink", "gray"];
   const limit = 10;
   const [doctorsList, setDoctorsList] = useState([]);
   useEffect(() => {
-    getTopDoctor(`get-top-doctor/${limit}`)
-      .then((res) => {
-        setDoctorsList(res.data);
-      })
-      .catch((e) => {
-        console.log(e);
-      });
+    getTopDoctor(`get-top-doctor/${limit}`).then((res) => {
+      console.log(res);
+      setDoctorsList(res.data);
+    });
+    // getTopDoctorEdit(10).then((res) => {
+    //   setDoctorsList(res.data);
+    // });
   }, []);
 
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 4,
-    slidesToScroll: 1,
-    arrows: true,
-  };
   const navi = useNavigate();
 
   return (
-    <section className="py-10">
+    <section className="py-10 md:px-0 px-2">
       <section className="max-w-screen-lg mx-auto my-3 py-3">
         <div className="flex justify-between items-center mb-5">
-          <h1 className="text-3xl font-semibold">Bác sĩ nổi bật</h1>
+          <h1 className="lg:text-3xl text-xl tracking-tight font-bold">
+            Bác sĩ nổi bật
+          </h1>
           <Button
             onClick={() => navi("/listItem?items=" + PAGE_TYPE.doctor)}
             size={"sm"}
             color="gray"
           >
-            <span className="mr-1">Xem thêm</span> <ArrowRightIcon />
+            <span className="mr-1 md:text-base text-xs">Xem thêm</span>{" "}
+            <ArrowRightIcon className="md:w-6 md:h-6 w-4 h-4" />
           </Button>
         </div>
         <Slider {...settings}>
@@ -48,7 +43,7 @@ function DoctorPopular() {
             doctorsList.length > 0 &&
             doctorsList.map((item) => (
               <div key={item.id}>
-                <div className="max-w-sm px-2">
+                <div className="lg:max-w-sm px-2">
                   <Card>
                     <div className="flex flex-col items-center pb-7">
                       <Avatar

@@ -45,7 +45,8 @@ function DetailSpecilaty() {
 
   return (
     <>
-      <div className="my-3 min-h-[300px]">
+      <div className="my-3 min-h-[300px] lg:px-0 px-2">
+        <div className="lg:mt-0 mt-10"></div>
         <div className="max-w-screen-lg mx-auto py-5">
           {specInfo ? (
             <article

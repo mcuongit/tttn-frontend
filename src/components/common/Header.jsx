@@ -89,11 +89,11 @@ function Header() {
           onClick={handleClose}
         ></div>
       </div>
-      <header className="bg-[rgba(255,255,255,0.8)] backdrop-blur fixed top-0 w-screen z-40">
+      <header className="bg-[rgba(255,255,255,0.8)] backdrop-blur fixed top-0 left-0 ring-0 w-screen z-40">
         <div className="container max-w-screen-lg mx-auto text-base">
-          <div className="flex flex-row items-center justify-start">
-            <div className="basis-3/12 flex flex-row items-center gap-x-2">
-              <button onClick={handleSidebar}>
+          <div className="flex flex-row items-center justify-start px-2">
+            <div className="lg:basis-3/12 flex flex-row basis-2/3 items-center gap-x-2">
+              <button onClick={handleSidebar} className="lg:hidden block">
                 <MenuIcon />
               </button>
               <Link to={path.HOME}>
@@ -104,7 +104,7 @@ function Header() {
                 />
               </Link>
             </div>
-            <nav className="basis-7/12">
+            <nav className="lg:basis-7/12 lg:block hidden">
               <ul className="flex flex-row justify-around text-sm items-center">
                 {menu.map((item, index) => {
                   return (
@@ -118,7 +118,7 @@ function Header() {
                 })}
               </ul>
             </nav>
-            <div className="basis-2/12 flex items-center justify-around">
+            <div className="lg:basis-2/12 basis-1/3 flex items-center justify-around">
               <div className="flex flex-col items-end text-gray-500 font-semibold">
                 <a href="/" className="flex items-center">
                   <IconHelp />

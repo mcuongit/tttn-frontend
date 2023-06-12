@@ -29,7 +29,7 @@ function CategoryDetail() {
   }, [slug]);
 
   return (
-    <section className="max-w-screen-lg mx-auto py-5">
+    <section className="max-w-screen-lg mx-auto py-5 lg:mt-0 mt-10 lg:px-0 px-2">
       <div className="mb-5">
         <CustomBreadcumb crumbs={crumbs} />
       </div>
@@ -52,7 +52,7 @@ function CategoryDetail() {
                 <Link
                   to={"/post-detail/" + item.id}
                   key={item.id}
-                  className="grid grid-cols-4 rounded-lg border shadow-md bg-white hover:opacity-80 transition-all"
+                  className="lg:grid lg:grid-cols-4 block rounded-lg border shadow-md bg-white hover:opacity-80 transition-all"
                 >
                   <img
                     src={IMAGE_LINK.post + "/" + item.image}
@@ -61,7 +61,7 @@ function CategoryDetail() {
                   />
                   <h5
                     style={{ lineClamp: 1 }}
-                    className="p-3 text-2xl font-bold tracking-tight text-gray-900 hover:underline col-span-3"
+                    className="p-3 lg:text-2xl text-lg font-bold tracking-tight text-gray-900 hover:underline lg:col-span-3"
                   >
                     {item.title}
                   </h5>

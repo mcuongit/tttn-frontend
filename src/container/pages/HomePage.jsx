@@ -19,10 +19,13 @@ function HomePage() {
   return (
     <>
       <Banner />
-      <section className="bg-gray-100">
+      <section
+        style={{ backgroundImage: 'url("/images/tracking/bg1.jpg")' }}
+        className="md:px-0 px-1 bg-cover bg-fixed bg-no-repeat"
+      >
         <div className="max-w-screen-lg mx-auto py-10">
-          <div className="border rounded py-3 px-5 bg-white shadow">
-            <h1 className="text-3xl tracking-tight font-bold mb-3">
+          <div className="rounded-xl py-5 px-5 bg-[rgba(255,255,255,0.7)] backdrop-blur">
+            <h1 className="md:text-3xl text-lg tracking-tight font-bold mb-3">
               Dễ dàng tra cứu lịch khám qua email
             </h1>
             <div className="flex justify-center items-center">
@@ -34,14 +37,18 @@ function HomePage() {
                 />
               </div>
               <div className="basis-2/3 pr-5">
-                <p className="text-gray-900 text-right tracking-tight text-2xl drop-shadow-lg">
+                <p className="text-gray-900 text-right tracking-tight md:text-2xl text-xs font-semibold">
                   Dễ dàng kiểm tra trạng thái đặt lịch khám, lịch sử đặt lịch
                   khám chỉ với 1 click
                 </p>
                 <div className="flex justify-end mt-3">
-                  <Button className="group" onClick={() => navi("/tracking")}>
+                  <Button
+                    size={"xs"}
+                    className="group"
+                    onClick={() => navi("/tracking")}
+                  >
                     <IconSearch className="mr-0 group-hover:mr-3 transition-all duration-300" />
-                    <span>Tra cứu ngay</span>
+                    <span className="md:text-base text-xs">Tra cứu ngay</span>
                     <IconChevronsRight className="ml-0 group-hover:ml-3 transition-all duration-300" />
                   </Button>
                 </div>

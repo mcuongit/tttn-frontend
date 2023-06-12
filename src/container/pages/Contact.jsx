@@ -19,7 +19,6 @@ function Contact() {
   const handleSubmit = (e) => {
     e.preventDefault();
     createContact(contactData).then(() => {
-      alert("Thành công");
       setContactData(initalState);
       setIsSubmited(true);
     });
@@ -33,7 +32,7 @@ function Contact() {
   };
 
   return (
-    <section className="bg-[url(images/contact/contact.svg)] bg-cover bg-center min-h-[600px] flex justify-center items-center">
+    <section className="bg-[url(/images/contact/bg.jpg)] bg-cover bg-center bg-fixed min-h-[600px] flex justify-center items-center lg:px-0 lg:pt-0 pt-16 px-2">
       {isSubmited ? (
         <div className="p-7 rounded-lg backdrop-blur bg-[rgb(255,255,255,0.7)]">
           <h1 className="text-3xl font-bold tracking-tight mb-3">

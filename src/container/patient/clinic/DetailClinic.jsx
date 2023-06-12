@@ -45,8 +45,8 @@ function DetailClinic() {
 
   return (
     <>
-      <div className="my-3 min-h-[300px]">
-        <div className="max-w-screen-lg mx-auto py-5">
+      <div className="my-3 min-h-[300px] lg:px-0 px-2">
+        <div className="max-w-screen-lg mx-auto py-5 lg:mt-0 mt-10">
           {clinicInfo ? (
             <article
               className="prose"

@@ -16,15 +16,18 @@ function HandBook() {
   const navi = useNavigate();
 
   return (
-    <section className="py-10 bg-gray-100">
+    <section className="py-10 bg-gray-100 md:px-0 px-2">
       <section className="max-w-screen-lg mx-auto my-3 ">
         <div className="flex justify-between items-center mb-5">
-          <h1 className="text-3xl font-semibold">Cẩm nang</h1>
+          <h1 className="lg:text-3xl text-2xl tracking-tight font-bold">
+            Cẩm nang
+          </h1>
           <Button onClick={() => navi(PAGE_TYPE.post)} size={"sm"} color="gray">
-            <span className="mr-1">Tất cả bài viết</span> <ArrowRightIcon />
+            <span className="mr-1 md:text-base text-xs">Tất cả bài viết</span>{" "}
+            <ArrowRightIcon className="md:w-6 md:h-6 w-4 h-4" />
           </Button>
         </div>
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid lg:grid-cols-3 md:grid-cols-2 grid-cols-1 gap-3">
           {lstPost.length > 0 &&
             lstPost.map((item, index) => (
               <Link
@@ -39,7 +42,7 @@ function HandBook() {
                 />
                 <h5
                   style={{ lineClamp: 1 }}
-                  className="text-2xl font-bold tracking-tight text-gray-900 mt-3 hover:underline"
+                  className="md:text-2xl text-lg font-bold tracking-tight text-gray-900 mt-3 hover:underline"
                 >
                   {item.title}
                 </h5>

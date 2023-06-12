@@ -7,7 +7,7 @@ function LayoutSite() {
   return (
     <>
       <Header />
-      <div className="py-8"></div>
+      <div className="lg:py-8"></div>
       <Outlet />
       <Footers />
     </>

@@ -48,16 +48,11 @@ function DoctorSchedule(props) {
 
   const fetchTime = (date) => {
     const { doctorId } = props;
-    getScheduleByDate(`get-by-date/${doctorId}/${date}`)
-      .then((res) => {
-        console.log(res.data);
-        if (res && res.data && res.data.statusCode === 0) {
-          setAvailableTime(res.data.data);
-        }
-      })
-      .catch((e) => {
-        console.error(e);
-      });
+    getScheduleByDate(`get-by-date/${doctorId}/${date}`).then((res) => {
+      if (res && res.data && res.data.statusCode === 0) {
+        setAvailableTime(res.data.data);
+      }
+    });
   };
 
   const handleClickModal = (time) => {
@@ -99,7 +94,7 @@ function DoctorSchedule(props) {
         <CalendarIcon />
         <label>Lịch khám</label>
       </div>
-      <div className="grid grid-cols-3 gap-2 pr-3">
+      <div className="grid lg:grid-cols-3 grid-cols-2 gap-2 pr-3">
         {availableTime && availableTime.length > 0
           ? availableTime.map((item) => (
               <Button

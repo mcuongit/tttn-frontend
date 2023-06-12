@@ -32,14 +32,14 @@ function DetailDoctor() {
 
   return (
     <>
-      <section>
+      <section className="lg:mt-0 mt-16 lg:px-0 px-2">
         <div className="mb-3 max-w-screen-lg mx-auto">
           <CustomBreadcumb crumbs={crumbs} />
         </div>
         {doctorDetail ? (
-          <div className="">
-            <div className="mb-3 flex justify-start py-5 max-w-screen-lg mx-auto">
-              <div className="basis-3/12">
+          <>
+            <div className="mb-3 lg:flex block justify-start py-5 max-w-screen-lg mx-auto">
+              <div className="basis-3/12 lg:mb-0 mb-2">
                 <Avatar
                   img={
                     doctorDetail.image
@@ -53,15 +53,18 @@ function DetailDoctor() {
                 />
               </div>
               <div className="basis-9/12">
-                <h1 className="font-semibold text-3xl mb-3">
+                <h1 className="font-semibold lg:text-3xl text-2xl lg:text-start text-center mb-3">
                   {`${doctorDetail.positionData.valueVi}, Bác sĩ ${doctorDetail.firstName} ${doctorDetail.lastName}`}
                 </h1>
                 {doctorDetail.markdown && doctorDetail.markdown.description && (
                   <>
-                    <span>{doctorDetail.markdown.description}</span>
-                    <br />
-                    <hr className="my-5" />
-                    <LikeAndShare link="https://google.com.vn" />
+                    <p className="text-justify">
+                      {doctorDetail.markdown.description}
+                    </p>
+                    <hr className="lg:my-5 lg:block hidden" />
+                    <div className="lg:block hidden">
+                      <LikeAndShare link="https://google.com.vn" />
+                    </div>
                   </>
                 )}
                 {!doctorDetail.markdown && (
@@ -71,9 +74,9 @@ function DetailDoctor() {
                 )}
               </div>
             </div>
-            <hr />
-            <div className="py-8 max-w-screen-lg mx-auto flex divide-x-2">
-              <div className="basis-1/2">
+            <hr className="lg:block hidden" />
+            <div className="py-8 max-w-screen-lg mx-auto flex lg:flex-row flex-col lg:divide-x-2">
+              <div className="lg:basis-1/2 lg:order-1 order-2">
                 <h3 className="text-xl font-bold text-gray-500 mb-3 tracking-tight">
                   Đặt lịch khám với bác sĩ này
                 </h3>
@@ -85,7 +88,7 @@ function DetailDoctor() {
                   </Button>
                 )}
               </div>
-              <div className="basis-1/2 pl-5">
+              <div className="lg:basis-1/2 lg:pl-5 lg:order-2 order-1 lg:border-0 lg:p-0 p-2 border rounded">
                 <DoctorExtraInfo doctorId={id} />
               </div>
             </div>
@@ -102,7 +105,7 @@ function DetailDoctor() {
                 </div>
               )}
             </div>
-          </div>
+          </>
         ) : (
           <h1 className="text-center text-red-600 text-xl">
             Không tìm thấy thông tin bác sĩ

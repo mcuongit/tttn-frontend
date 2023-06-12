@@ -27,7 +27,8 @@ function PostDetail() {
   }, []);
 
   return (
-    <section className="max-w-screen-lg mx-auto py-3">
+    <section className="max-w-screen-lg mx-auto py-3 lg:px-0 px-2">
+      <div className="lg:mt-0 mt-10"></div>
       <CustomBreadcumb crumbs={crumbs} />
       <div className="py-5">
         <article

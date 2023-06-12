@@ -41,7 +41,10 @@ function Category() {
   };
   return (
     <section className="max-w-screen-lg mx-auto">
-      <CustomBreadcumb crumbs={crumbs} />
+      <div className="md:mt-0 mt-16"></div>
+      <div className="lg:px-0 px-2">
+        <CustomBreadcumb crumbs={crumbs} />
+      </div>
       <a
         href="#"
         className="fixed bottom-10 right-10 border-2 p-2 rounded-lg bg-gray-200"
@@ -49,32 +52,34 @@ function Category() {
         Go top
       </a>
       <form
-        className="flex justify-between items-center my-3"
+        className="lg:flex lg:justify-between block items-center my-3 lg:px-0 px-2"
         onSubmit={handleSubmit}
       >
-        <h1 className="uppercase text-2xl font-semibold">danh mục bài viết</h1>
+        <h1 className="uppercase lg:text-2xl md:text-xl text-lg font-semibold">
+          danh mục bài viết
+        </h1>
         <TextInput type="search" placeholder="Tìm kiếm danh mục" />
       </form>
-      <section className="my-3">
-        <div className="border mb-5 p-3 rounded-lg shadow-sm bg-white">
-          <h1 className="uppercase text-xl font-semibold">
+      <section className="my-3 lg:px-0 px-2">
+        <details className="border mb-5 p-3 rounded-lg shadow-sm bg-white">
+          <summary className="uppercase md:text-xl text-lg font-semibold">
             Tìm kiếm theo chữ cái
-          </h1>
+          </summary>
           <hr />
-          <div className="pt-3 grid grid-cols-12 gap-1  ">
+          <div className="pt-3 grid lg:grid-cols-12 md:grid-cols-8 grid-cols-6 gap-1  ">
             {LETTER.map((item, index) => {
               return (
                 <a
                   key={index}
                   href={`#${item}`}
-                  className="px-4 py-2 border font-semibold rounded text-center"
+                  className="md:px-4 md:py-2 p-2 border font-semibold rounded text-center"
                 >
                   {item}
                 </a>
               );
             })}
           </div>
-        </div>
+        </details>
         {LETTER.map((item, index) => {
           return (
             <div className="mb-7" key={index}>

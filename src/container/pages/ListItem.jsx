@@ -44,8 +44,9 @@ function ListItem() {
 
   return (
     <div className="bg-gray-100">
-      <section className="max-w-screen-lg mx-auto py-5">
-        <div className="grid grid-cols-4 gap-5">
+      <div className="md:mt-0 mt-10"></div>
+      <section className="max-w-screen-lg mx-auto py-5 px-2">
+        <div className="grid lg:grid-cols-4 grid-cols-2 lg:gap-5 md:gap-3 gap-2">
           {list &&
             list.length > 0 &&
             list.map((item) => {
@@ -53,11 +54,11 @@ function ListItem() {
                 <Link
                   to={`/${items}/${item.id}`}
                   key={item.id}
-                  className="hover:opacity-70 transition-all"
+                  className="hover:opacity-70 transition-all border"
                   title={item.name}
                 >
                   <div className="flex rounded-lg border border-gray-200 bg-white shadow-md flex-col">
-                    <figure className="h-48 flex justify-center items-center">
+                    <figure className="lg:h-48 h-28 flex justify-center items-center">
                       <img
                         className={clsName}
                         src={
@@ -70,8 +71,8 @@ function ListItem() {
                     </figure>
 
                     {img ? (
-                      <div className="p-6 h-28">
-                        <h5 className="text-xl font-bold tracking-tight text-gray-900 overflow-hidden">
+                      <div className="lg:p-6 p-3 lg:h-28 h-auto">
+                        <h5 className="md:text-xl text-sm md:font-bold font-semibold tracking-tight text-gray-900 overflow-hidden">
                           {item.firstName + " " + item.lastName}
                         </h5>
                         <span className="text-sm text-gray-500">
@@ -79,8 +80,8 @@ function ListItem() {
                         </span>
                       </div>
                     ) : (
-                      <div className="p-6 h-28">
-                        <h5 className="text-xl font-bold tracking-tight text-gray-900 truncate">
+                      <div className="lg:p-6 p-3 lg:h-28 h-auto">
+                        <h5 className="md:text-xl text-lg md:font-bold font-semibold tracking-tight text-gray-900 truncate">
                           {item.name}
                         </h5>
                       </div>

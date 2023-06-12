@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { findAllNotification } from "../../api/notificationService";
 import { dateOnly } from "../../utils/functions";
 import { useNavigate } from "react-router-dom";
+import SearchAlgolia from "./SearchAlgolia";
 
 function Banner() {
   const [notification, setNotification] = useState([]);
@@ -36,7 +37,7 @@ function Banner() {
   };
 
   return (
-    <div className="flex flex-col justify-between max-w-screen-xl mx-auto text-base bg-[url(assets/images/banner/header-bg.jpg)] bg-center bg-no-repeat bg-cover min-h-[600px]">
+    <div className="flex flex-col justify-between lg:max-w-screen-xl max-w-screen-sm mx-auto text-base bg-[url(assets/images/banner/header-bg.jpg)] bg-center bg-no-repeat bg-cover md:min-h-[600px] min-h-[500px]">
       <div className="banner-top py-16 bg-gradient-to-b from-[rgba(0,0,0,0.3)] to-transparent">
         <div className="text-center font-semibold text-3xl text-white">
           <h1 className="uppercase drop-shadow-lg">nền tảng y tế</h1>
@@ -46,18 +47,19 @@ function Banner() {
         </div>
         <div className="flex justify-center items-center py-3 mt-4">
           <form method="get" onSubmit={handleSubmit}>
-            <input
+            {/* <input
               className="bg-[rgba(255,255,255,0.5)] backdrop-blur py-3 px-8 rounded-full placeholder:text-sm border-none md:w-[400px]"
               type="search"
               placeholder="Tìm bác sĩ..."
               onChange={(e) => setQuery(e.target.value)}
-            />
+            /> */}
+            <SearchAlgolia />
           </form>
         </div>
       </div>
       <div>
         <div className="py-6 bg-gradient-to-t from-[rgba(0,0,0,0.6)] to-transparent">
-          <div className="max-w-screen-lg mx-auto">
+          <div className="lg:max-w-screen-lg md:max-w-screen-md sm:max-w-screen-sm mx-auto">
             <marquee
               scrolldelay="60"
               className="text-xl font-semibold text-yellow-200"

@@ -37,8 +37,9 @@ function Tracking() {
       });
   };
   return (
-    <section className="max-w-screen-lg my-3 mx-auto">
-      <h1 className="text-3xl font-bold tracking-tight mb-3">
+    <section className="max-w-screen-lg my-3 mx-auto lg:px-0 px-2">
+      <div className="lg:mt-0 mt-16"></div>
+      <h1 className="lg:text-3xl text-2xl font-bold tracking-tight mb-3">
         Tra cứu trạng thái lịch khám
       </h1>
       <form
@@ -64,7 +65,7 @@ function Tracking() {
             Hiển thị {response.bookingData.length} kết quả cho email{" "}
             <span className="text-blue-600">{email}</span>
           </h3>
-          <Table striped>
+          <Table striped className="lg:w-auto w-[600px] overflow-x-auto">
             <Table.Head>
               <Table.HeadCell>Ngày đặt</Table.HeadCell>
               <Table.HeadCell>Bác sĩ</Table.HeadCell>
